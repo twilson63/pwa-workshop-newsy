@@ -9,21 +9,19 @@ import { createAsyncResourceBundle, createSelector } from 'redux-bundler'
 const bundle = createAsyncResourceBundle({
   name: 'sources',
   getPromise: () =>
-    Promise.resolve([
-      { id: 'abc-news', name: 'ABC News' },
-      { id: 'cnn', name: 'CNN' }
-    ])
-  // fetch('https://twilson63.jrscode.cloud/newsy/_find', {
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //     authorization: 'Basic bmV3c3k6bmV3c3k='
-  //   },
-  //   method: 'POST',
-  //   body: JSON.stringify({
-  //     selector: { type: 'source' },
-  //     limit: 10
-  //   })
-  // }).then(res => res.json())
+    fetch('https://twilson63.jrscode.cloud/newsy/_find', {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Basic bmV3c3k6bmV3c3k='
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        selector: { type: 'source' },
+        limit: 10
+      })
+    })
+      .then(res => res.json())
+      .then(results => results.docs)
 })
 
 bundle.reactShouldFetchSources = createSelector(

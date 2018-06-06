@@ -4,12 +4,10 @@ import propEq from 'ramda/src/propEq'
 import compose from 'ramda/src/compose'
 import getArticles from './get-articles'
 
-import data from './data.json'
+//import data from './data.json'
 const getSources = compose(
   filter(propEq('type', 'source')),
   pluck('doc')
 )
 
-export default () => {
-  return [{ id: 'abc-news', name: 'ABC News' }, { id: 'cnn', name: 'CNN' }]
-}
+export default () => []
