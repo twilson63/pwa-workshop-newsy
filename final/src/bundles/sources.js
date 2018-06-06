@@ -9,53 +9,16 @@ import { createAsyncResourceBundle, createSelector } from 'redux-bundler'
 const bundle = createAsyncResourceBundle({
   name: 'sources',
   getPromise: () =>
-    // fetch(`https://newsapi.org/v2/sources?apiKey=${process.env.NEWS_KEY}`)
-    //   .then(res => res.json())
-    //   .then(doc => doc.sources)
-    new Promise(resolve =>
-      resolve([
-        {
-          name: 'Hacker News',
-          id: 'hacker-news'
-        },
-        {
-          name: 'ABC News',
-          id: 'abc-news'
-        },
-        {
-          name: 'CNN',
-          id: 'cnn'
-        },
-        {
-          name: 'Fox News',
-          id: 'fox-news'
-        },
-        {
-          id: 'the-verge',
-          name: 'The Verge'
-        },
-        {
-          id: 'engadget',
-          name: 'Engadget'
-        },
-        {
-          id: 'crypto-coins-news',
-          name: 'Crypto Coins News'
-        },
-        {
-          id: 'the-next-web',
-          name: 'The Next Web'
-        },
-        {
-          id: 'recode',
-          name: 'Recode'
-        },
-        {
-          id: 'ars-technica',
-          name: 'Ars Technica'
-        }
-      ])
-    )
+    fetch('https://twilson63.jrscode.cloud/newsy/_find', {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Basic bmV3c3k6bmV3c3k='
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        selector: { type: 'source' }
+      })
+    }).then(res => res.json())
 })
 
 bundle.reactShouldFetchSources = createSelector(

@@ -643,6 +643,15 @@ perform certain functions during an event of your components rendering lifecycle
 </section>
   </div>
   <div class="slide hidden" id="slide-36">
+    <section class="slide-content"><h2 id="common-react-patterns">Common React Patterns</h2>
+<ul>
+<li>Presentation/Container</li>
+<li>Render Props</li>
+<li>Higher Order Components</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-37">
     <section class="slide-content"><h3 id="exercise">Exercise</h3>
 <p>Create a React Hello World Component</p>
 <ul>
@@ -654,26 +663,26 @@ perform certain functions during an event of your components rendering lifecycle
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-37">
+  <div class="slide hidden" id="slide-38">
     <section class="slide-content"><h3 id="exercise">Exercise</h3>
 <p>Create a React Counter Component</p>
 <p>Using state, create a counter component that can increment and decrement a count</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-38">
+  <div class="slide hidden" id="slide-39">
     <section class="slide-content"><h3 id="exercise">Exercise</h3>
 <p>Create a guess a number game with react</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-39">
+  <div class="slide hidden" id="slide-40">
     <section class="slide-content"><h3 id="review-exercises">Review Exercises</h3>
 </section>
   </div>
-  <div class="slide hidden" id="slide-40">
+  <div class="slide hidden" id="slide-41">
     <section class="slide-content"><h1 id="material-ui">Material UI</h1>
 </section>
   </div>
-  <div class="slide hidden" id="slide-41">
+  <div class="slide hidden" id="slide-42">
     <section class="slide-content"><h3 id="setup">Setup</h3>
 <ul>
 <li>Install material-ui</li>
@@ -683,24 +692,51 @@ perform certain functions during an event of your components rendering lifecycle
 <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Roboto:300,400,500&quot;&gt;
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-42">
+  <div class="slide hidden" id="slide-43">
     <section class="slide-content"><h3 id="icons">Icons</h3>
 <pre><code>npm install @material-ui/icons
 </code></pre><p>Add the following to the head in index.html</p>
 <pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/icon?family=Material+Icons&quot;&gt;
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-43">
+  <div class="slide hidden" id="slide-44">
     <section class="slide-content"><h3 id="material-design">Material Design</h3>
 <p>Material UI is based on Material Design:</p>
 <p><a href="https://material.io/design/">https://material.io/design/</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-44">
+  <div class="slide hidden" id="slide-45">
     <section class="slide-content"><h1 id="components">Components</h1>
 </section>
   </div>
-  <div class="slide hidden" id="slide-45">
+  <div class="slide hidden" id="slide-46">
+    <section class="slide-content"><h3 id="style">Style</h3>
+<blockquote>
+<p>example</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { withStyle } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+
+<span class="hljs-keyword">const</span> MyComponent = <span class="hljs-function">(<span class="hljs-params">{ classes }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.root}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.h1}</span>&gt;</span>Hello World<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">const</span> styles = <span class="hljs-function"><span class="hljs-params">theme</span> =&gt;</span> ({
+  <span class="hljs-attr">root</span>: {
+    <span class="hljs-attr">color</span>: <span class="hljs-string">'#fff'</span>,
+    <span class="hljs-attr">backgroundColor</span>: <span class="hljs-string">'rgba(0,0,0,.8)'</span>
+  },
+  <span class="hljs-attr">h1</span>: {
+    <span class="hljs-attr">fontSize</span>: <span class="hljs-string">'3em'</span>
+  }
+})
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withStyles(style)(MyComponent)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-47">
     <section class="slide-content"><h3 id="common-components">Common Components</h3>
 <ul>
 <li>AppBar</li>
@@ -712,44 +748,388 @@ perform certain functions during an event of your components rendering lifecycle
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-46">
+  <div class="slide hidden" id="slide-48">
     <section class="slide-content"><h3 id="appbar">AppBar</h3>
 <p><a href="https://material-ui.com/demos/app-bar/">https://material-ui.com/demos/app-bar/</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-47">
+  <div class="slide hidden" id="slide-49">
+    <section class="slide-content"><h3 id="header-component">Header Component</h3>
+<blockquote>
+<p>src/components/header</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> { withStyles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+
+<span class="hljs-keyword">import</span> AppBar <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/AppBar'</span>
+<span class="hljs-keyword">import</span> Toolbar <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Toolbar'</span>
+<span class="hljs-keyword">import</span> Typography <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Typography'</span>
+<span class="hljs-keyword">import</span> IconButton <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/IconButton'</span>
+<span class="hljs-keyword">import</span> MenuIcon <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/icons/Menu'</span>
+<span class="hljs-keyword">import</span> Button <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Button'</span>
+
+<span class="hljs-comment">/**
+ * Header Component
+ *
+ * This component provides the header for the application
+ */</span>
+<span class="hljs-keyword">const</span> Header = <span class="hljs-function">(<span class="hljs-params">{ children, classes }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">AppBar</span> <span class="hljs-attr">position</span>=<span class="hljs-string">"sticky"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Toolbar</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">IconButton</span> <span class="hljs-attr">color</span>=<span class="hljs-string">"inherit"</span> <span class="hljs-attr">aria-label</span>=<span class="hljs-string">"Menu"</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">MenuIcon</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">IconButton</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.flex}</span> <span class="hljs-attr">variant</span>=<span class="hljs-string">"title"</span> <span class="hljs-attr">color</span>=<span class="hljs-string">"inherit"</span>&gt;</span>
+        {children}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Button</span> <span class="hljs-attr">color</span>=<span class="hljs-string">"inherit"</span>&gt;</span>Refresh<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Toolbar</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">AppBar</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">const</span> styles = <span class="hljs-function"><span class="hljs-params">theme</span> =&gt;</span> ({
+  <span class="hljs-attr">flex</span>: {
+    <span class="hljs-attr">flex</span>: <span class="hljs-number">1</span>
+  }
+})
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withStyles(styles)(Header)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-50">
     <section class="slide-content"><h3 id="card">Card</h3>
 <p><a href="https://material-ui.com/demos/cards/">https://material-ui.com/demos/cards/</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-48">
-    <section class="slide-content"><h3 id="list">List</h3>
-<p><a href="https://material-ui.com/demos/lists/">https://material-ui.com/demos/lists/</a></p>
+  <div class="slide hidden" id="slide-51">
+    <section class="slide-content"><h3 id="about-card">About Card</h3>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> { withStyles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+<span class="hljs-keyword">import</span> Card <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Card'</span>
+<span class="hljs-keyword">import</span> CardActions <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardActions'</span>
+<span class="hljs-keyword">import</span> CardContent <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardContent'</span>
+<span class="hljs-keyword">import</span> CardMedia <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardMedia'</span>
+<span class="hljs-keyword">import</span> Button <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Button'</span>
+<span class="hljs-keyword">import</span> Typography <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Typography'</span>
+
+<span class="hljs-comment">/**
+ * About Component
+ *
+ * This component contains all of the about information for the application
+ *
+ */</span>
+<span class="hljs-keyword">const</span> About = <span class="hljs-function">(<span class="hljs-params">{ classes }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.root}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Card</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CardContent</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.headline}</span> <span class="hljs-attr">variant</span>=<span class="hljs-string">"headline"</span>&gt;</span>
+          About Newsy
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.subheading}</span> <span class="hljs-attr">variant</span>=<span class="hljs-string">"subheading"</span>&gt;</span>
+          Get the news you want from the sources you trust!
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.p}</span> <span class="hljs-attr">component</span>=<span class="hljs-string">"p"</span>&gt;</span>
+          Newsy is a customized mobile news application, enabling you to get the
+          news you want from the sources that you trust.
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.p}</span> <span class="hljs-attr">component</span>=<span class="hljs-string">"p"</span>&gt;</span>
+          This app was built for learning purposes and is provided as is. If you
+          are interested in adding new features or would like to report bugs or
+          make suggestions, please visit the project repository on github.{' '}
+          <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">a</span>
+            <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.a}</span>
+            <span class="hljs-attr">target</span>=<span class="hljs-string">"_new"</span>
+            <span class="hljs-attr">href</span>=<span class="hljs-string">"https://github.com/twilson63/newsy"</span>
+          &gt;</span>
+            https://github.com/twilson63/newsy
+          <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.p}</span> <span class="hljs-attr">component</span>=<span class="hljs-string">"p"</span>&gt;</span>
+          This app was built by the instructors of the JRS Coding School.
+          <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.a}</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_new"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"http://jrscode.com"</span>&gt;</span>
+            http://jrscode.com
+          <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.p}</span> <span class="hljs-attr">component</span>=<span class="hljs-string">"p"</span>&gt;</span>
+          The data of the application is provided by newsapi.org. <span class="hljs-tag">&lt;<span class="hljs-name">br</span> /&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.a}</span> <span class="hljs-attr">target</span>=<span class="hljs-string">"_new"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"https://newsapi.org"</span>&gt;</span>
+            https://newsapi.org
+          <span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">CardContent</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CardActions</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span>&gt;</span>Back to Articles<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">CardActions</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Card</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">const</span> styles = <span class="hljs-function"><span class="hljs-params">theme</span> =&gt;</span> ({
+  <span class="hljs-attr">root</span>: {
+    <span class="hljs-attr">margin</span>: <span class="hljs-string">'8px'</span>
+  },
+  <span class="hljs-attr">headline</span>: {
+    <span class="hljs-attr">marginBottom</span>: <span class="hljs-string">'16px'</span>
+  },
+  <span class="hljs-attr">subheading</span>: {
+    <span class="hljs-attr">fontSize</span>: <span class="hljs-string">'1.2em'</span>,
+    <span class="hljs-attr">color</span>: <span class="hljs-string">'lightgray'</span>,
+    <span class="hljs-attr">marginBottom</span>: <span class="hljs-string">'16px'</span>
+  },
+  <span class="hljs-attr">p</span>: {
+    <span class="hljs-attr">marginTop</span>: <span class="hljs-string">'8px'</span>,
+    <span class="hljs-attr">marginBottom</span>: <span class="hljs-string">'16px'</span>
+  },
+  <span class="hljs-attr">a</span>: {
+    <span class="hljs-attr">marginTop</span>: <span class="hljs-string">'8px'</span>
+  }
+})
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withStyles(styles)(About)
+</code></pre>
 </section>
   </div>
-  <div class="slide hidden" id="slide-49">
-    <section class="slide-content"><h3 id="drawer">Drawer</h3>
-<p><a href="https://material-ui.com/demos/drawers/">https://material-ui.com/demos/drawers/</a></p>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-50">
+  <div class="slide hidden" id="slide-52">
     <section class="slide-content"><h3 id="avatar">Avatar</h3>
 <p><a href="https://material-ui.com/demos/avatars/">https://material-ui.com/demos/avatars/</a></p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-51">
-    <section class="slide-content"><h1 id="style">Style</h1>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-52">
-    <section class="slide-content"><h3 id="style">Style</h3>
-<ul>
-<li>themes</li>
-<li>withStyle</li>
-</ul>
-</section>
-  </div>
   <div class="slide hidden" id="slide-53">
+    <section class="slide-content"><h3 id="avatar">Avatar</h3>
+<blockquote>
+<p>src/components/news-icon.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> { withStyles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+<span class="hljs-keyword">import</span> Avatar <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Avatar'</span>
+<span class="hljs-keyword">import</span> NewsIcon <span class="hljs-keyword">from</span> <span class="hljs-string">'../assets/news-avatar.png'</span>
+<span class="hljs-keyword">import</span> purple <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/colors/purple'</span>
+
+<span class="hljs-comment">/**
+ * News Avatar Component
+ *
+ */</span>
+<span class="hljs-keyword">const</span> styles = <span class="hljs-function"><span class="hljs-params">theme</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> {
+    <span class="hljs-attr">purpleAvatar</span>: {
+      <span class="hljs-attr">margin</span>: <span class="hljs-number">10</span>,
+      <span class="hljs-attr">backgroundColor</span>: purple
+    }
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withStyles(styles)(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Avatar</span> <span class="hljs-attr">src</span>=<span class="hljs-string">{NewsIcon}</span> <span class="hljs-attr">alt</span>=<span class="hljs-string">"newsy"</span> /&gt;</span>
+})</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-54">
+    <section class="slide-content"><h3 id="list">List</h3>
+<p><a href="https://material-ui.com/demos/lists/">https://material-ui.com/demos/lists/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-55">
+    <section class="slide-content"><h3 id="list-sources">List Sources</h3>
+<blockquote>
+<p>src/component/sources.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> List <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/List'</span>
+<span class="hljs-keyword">import</span> ListItem <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItem'</span>
+<span class="hljs-keyword">import</span> ListItemText <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItemText'</span>
+<span class="hljs-keyword">import</span> Checkbox <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Checkbox'</span>
+
+<span class="hljs-keyword">import</span> map <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/map'</span>
+
+<span class="hljs-keyword">const</span> createList = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+  map(<span class="hljs-function"><span class="hljs-params">source</span> =&gt;</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{source.id}</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Checkbox</span> <span class="hljs-attr">tabIndex</span>=<span class="hljs-string">{-1}</span> <span class="hljs-attr">disableRipple</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ListItemText</span>&gt;</span>{source.name}<span class="hljs-tag">&lt;/<span class="hljs-name">ListItemText</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ListItem</span>&gt;</span>
+  ))
+
+const Sources = ({ classes, sources }) =&gt; {
+  if (sourcesIsLoading) {
+    return <span class="hljs-tag">&lt;<span class="hljs-name">Spinner</span> /&gt;</span>
+  }
+  const list = createList()
+  return <span class="hljs-tag">&lt;<span class="hljs-name">List</span>&gt;</span>{list(sources || [])}<span class="hljs-tag">&lt;/<span class="hljs-name">List</span>&gt;</span>
+}
+
+export default Sources</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-56">
+    <section class="slide-content"><blockquote>
+<p>src/component/custom.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+<span class="hljs-keyword">import</span> { connect } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler-react'</span>
+
+<span class="hljs-keyword">import</span> { withStyles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+<span class="hljs-keyword">import</span> Card <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Card'</span>
+<span class="hljs-keyword">import</span> CardActions <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardActions'</span>
+<span class="hljs-keyword">import</span> CardContent <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardContent'</span>
+<span class="hljs-keyword">import</span> CardMedia <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/CardMedia'</span>
+<span class="hljs-keyword">import</span> Button <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Button'</span>
+<span class="hljs-keyword">import</span> Typography <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Typography'</span>
+
+<span class="hljs-keyword">import</span> ListSources <span class="hljs-keyword">from</span> <span class="hljs-string">'./sources'</span>
+
+<span class="hljs-keyword">import</span> getSources <span class="hljs-keyword">from</span> <span class="hljs-string">'../lib/get-sources'</span>
+<span class="hljs-keyword">const</span> sources = getSources()
+
+<span class="hljs-comment">/**
+ * Customize your sources
+ *
+ * this component provides a checkbox list of sources you can use to
+ * customize your news.
+ */</span>
+<span class="hljs-keyword">const</span> Custom = <span class="hljs-function">(<span class="hljs-params">{ classes }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.root}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">Card</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CardContent</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.headline}</span> <span class="hljs-attr">variant</span>=<span class="hljs-string">"headline"</span>&gt;</span>
+          Customize News
+        <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ListSources</span> <span class="hljs-attr">source</span>=<span class="hljs-string">{sources}</span> /&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">CardContent</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">CardActions</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">Button</span>&gt;</span>Back to Articles<span class="hljs-tag">&lt;/<span class="hljs-name">Button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">CardActions</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">Card</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+)
+
+const styles = theme =&gt; ({
+  root: {
+    margin: '8px'
+  },
+  headline: {
+    marginBottom: '16px'
+  },
+  subheading: {
+    marginBottom: '16px'
+  }
+})
+
+export default withStyles(styles)(Custom)</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-57">
+    <section class="slide-content"><pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> List <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/List'</span>
+<span class="hljs-keyword">import</span> ListItem <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItem'</span>
+<span class="hljs-keyword">import</span> ListItemText <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItemText'</span>
+<span class="hljs-keyword">import</span> Typography <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Typography'</span>
+<span class="hljs-keyword">import</span> map <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/map'</span>
+<span class="hljs-keyword">import</span> NewsIcon <span class="hljs-keyword">from</span> <span class="hljs-string">'./news-icon'</span>
+
+<span class="hljs-keyword">import</span> getArticles <span class="hljs-keyword">from</span> <span class="hljs-string">'../lib/get-articles'</span>
+<span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> remove when we add redux</span>
+<span class="hljs-keyword">const</span> articles = getArticles()
+
+<span class="hljs-keyword">const</span> createList = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+  map(<span class="hljs-function"><span class="hljs-params">article</span> =&gt;</span> (
+    <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">key</span>=<span class="hljs-string">{article._id}</span> <span class="hljs-attr">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">NewsIcon</span> /&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">ListItemText</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">style</span>=<span class="hljs-string">{{</span> <span class="hljs-attr">float:</span> '<span class="hljs-attr">right</span>' }}&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">component</span>=<span class="hljs-string">"p"</span>&gt;</span>{article.source.name}<span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+        {article.title}
+      <span class="hljs-tag">&lt;/<span class="hljs-name">ListItemText</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">ListItem</span>&gt;</span></span>
+  ))
+
+<span class="hljs-comment">/**
+ * Articles Component
+ *
+ * A component that shows all the articles for your custom sources list
+ */</span>
+<span class="hljs-keyword">const</span> Articles = <span class="hljs-function">(<span class="hljs-params">{ classes, articles }</span>) =&gt;</span> {
+  <span class="hljs-keyword">const</span> list = createList()
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">List</span>&gt;</span>{list(articles || [])}<span class="hljs-tag">&lt;/<span class="hljs-name">List</span>&gt;</span></span>
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Articles
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-58">
+    <section class="slide-content"><h3 id="drawer">Drawer</h3>
+<p><a href="https://material-ui.com/demos/drawers/">https://material-ui.com/demos/drawers/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-59">
+    <section class="slide-content"><blockquote>
+<p>src/components/drawer.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+
+<span class="hljs-keyword">import</span> Drawer <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Drawer'</span>
+<span class="hljs-keyword">import</span> Typography <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/Typography'</span>
+<span class="hljs-keyword">import</span> { withStyles } <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/styles'</span>
+
+<span class="hljs-keyword">import</span> List <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/List'</span>
+<span class="hljs-keyword">import</span> ListItem <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItem'</span>
+<span class="hljs-keyword">import</span> ListItemText <span class="hljs-keyword">from</span> <span class="hljs-string">'@material-ui/core/ListItemText'</span>
+
+<span class="hljs-comment">/**
+ * AppDrawer
+ *
+ * The navigation component
+ *
+ */</span>
+<span class="hljs-keyword">const</span> AppDrawer = <span class="hljs-function">(<span class="hljs-params">{ classes }</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Drawer</span> <span class="hljs-attr">open</span>=<span class="hljs-string">{false}</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.list}</span> <span class="hljs-attr">tabIndex</span>=<span class="hljs-string">{0}</span> <span class="hljs-attr">role</span>=<span class="hljs-string">"button"</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">Typography</span> <span class="hljs-attr">className</span>=<span class="hljs-string">{classes.menuTitle}</span> <span class="hljs-attr">variant</span>=<span class="hljs-string">"display1"</span>&gt;</span>
+        Newsy Menu
+      <span class="hljs-tag">&lt;/<span class="hljs-name">Typography</span>&gt;</span>
+      <span class="hljs-tag">&lt;<span class="hljs-name">List</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">ListItemText</span>&gt;</span>My News<span class="hljs-tag">&lt;/<span class="hljs-name">ListItemText</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ListItem</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">ListItemText</span>&gt;</span>Customize<span class="hljs-tag">&lt;/<span class="hljs-name">ListItemText</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ListItem</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">ListItem</span> <span class="hljs-attr">button</span>&gt;</span>
+          <span class="hljs-tag">&lt;<span class="hljs-name">ListItemText</span>&gt;</span>About<span class="hljs-tag">&lt;/<span class="hljs-name">ListItemText</span>&gt;</span>
+        <span class="hljs-tag">&lt;/<span class="hljs-name">ListItem</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">List</span>&gt;</span>
+    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">Drawer</span>&gt;</span></span>
+)
+
+<span class="hljs-keyword">const</span> styles = {
+  <span class="hljs-attr">list</span>: {
+    <span class="hljs-attr">width</span>: <span class="hljs-number">250</span>
+  },
+  <span class="hljs-attr">menuTitle</span>: {
+    <span class="hljs-attr">textAlign</span>: <span class="hljs-string">'center'</span>,
+    <span class="hljs-attr">marginTop</span>: <span class="hljs-string">'8px'</span>,
+    <span class="hljs-attr">marginBottom</span>: <span class="hljs-string">'16px'</span>
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> withStyles(styles)(AppDrawer)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-60">
     <section class="slide-content"><h3 id="themes">Themes</h3>
 <pre><code>import { MuiThemeProvider } from &#39;@material-ui/core/styles&#39;
 import theme from &#39;./theme&#39;
@@ -759,73 +1139,19 @@ import theme from &#39;./theme&#39;
 &lt;/MuiThemeProvider&gt;
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-54">
-    <section class="slide-content"><h2 id="lab">Lab</h2>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-55">
-    <section class="slide-content"><ul>
-<li>Theme</li>
-<li>AppBar</li>
-</ul>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-56">
-    <section class="slide-content"><h2 id="exercise">Exercise</h2>
-<p>Create a list component called articles:</p>
-<pre><code class="lang-js"><span class="hljs-keyword">const</span> sample = [
-  {
-    <span class="hljs-attr">title</span>: <span class="hljs-string">'An Awesome Article'</span>,
-    <span class="hljs-attr">url</span>: <span class="hljs-string">'A link'</span>,
-    <span class="hljs-attr">_id</span>: <span class="hljs-string">'uniqueidentifier'</span>,
-    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://placehold.it/320/320'</span>
-  }
-]
-</code></pre>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-57">
-    <section class="slide-content"><h2 id="exercise">Exercise</h2>
-<p>Create an About Card Component</p>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-58">
-    <section class="slide-content"><h2 id="exercise">Exercise</h2>
-<p>Create a List Articles Component</p>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-59">
-    <section class="slide-content"><h2 id="exercise">Exercise</h2>
-<p>Create a Show Article Component</p>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-60">
-    <section class="slide-content"><h2 id="exercise">Exercise</h2>
-<p>Create a Custom List Component with checkboxes</p>
-</section>
-  </div>
   <div class="slide hidden" id="slide-61">
-    <section class="slide-content"><h2 id="common-react-patterns">Common React Patterns</h2>
-<ul>
-<li>Presentation/Container</li>
-<li>Render Props</li>
-<li>Higher Order Components</li>
-</ul>
-</section>
-  </div>
-  <div class="slide hidden" id="slide-62">
     <section class="slide-content"><h2 id="lunch">Lunch</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-63">
+  <div class="slide hidden" id="slide-62">
     <section class="slide-content"><h2 id="redux-and-redux-bundler">Redux and Redux Bundler</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-64">
+  <div class="slide hidden" id="slide-63">
     <section class="slide-content"><h2 id="what-is-redux-">What is redux?</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-65">
+  <div class="slide hidden" id="slide-64">
     <section class="slide-content"><h3 id="tour-of-redux">Tour of Redux</h3>
 <ul>
 <li>Store</li>
@@ -838,12 +1164,12 @@ import theme from &#39;./theme&#39;
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-66">
+  <div class="slide hidden" id="slide-65">
     <section class="slide-content"><h2 id="what-is-redux-bundler-">What is redux bundler?</h2>
 <p>A module that takes some best practices and puts them in a organized structure.</p>
 </section>
   </div>
-  <div class="slide hidden" id="slide-67">
+  <div class="slide hidden" id="slide-66">
     <section class="slide-content"><ul>
 <li>composeBundles</li>
 <li>Provider</li>
@@ -853,12 +1179,12 @@ import theme from &#39;./theme&#39;
 </ul>
 </section>
   </div>
-  <div class="slide hidden" id="slide-68">
+  <div class="slide hidden" id="slide-67">
     <section class="slide-content"><h3 id="setup">Setup</h3>
 <pre><code>npm install redux-bundler redux-bundler-react
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-69">
+  <div class="slide hidden" id="slide-68">
     <section class="slide-content"><h3 id="create-our-redux-store">Create our Redux Store</h3>
 <ul>
 <li>create a bundles folder</li>
@@ -868,7 +1194,7 @@ import theme from &#39;./theme&#39;
 export default composeBundles()
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-70">
+  <div class="slide hidden" id="slide-69">
     <section class="slide-content"><h3 id="add-store-to-react">Add Store to React</h3>
 <pre><code>import { Provider } from &#39;redux-bundler-react&#39;
 import getStore from &#39;./bundles&#39;
@@ -878,7 +1204,7 @@ import getStore from &#39;./bundles&#39;
 &lt;/Provider&gt;
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-71">
+  <div class="slide hidden" id="slide-70">
     <section class="slide-content"><h3 id="create-a-bundle">Create a bundle</h3>
 <pre><code>export default {
   name: &#39;app&#39;,
@@ -889,7 +1215,7 @@ import getStore from &#39;./bundles&#39;
 }
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-72">
+  <div class="slide hidden" id="slide-71">
     <section class="slide-content"><h3 id="lab">Lab</h3>
 <ul>
 <li>App Bundle</li>
@@ -901,50 +1227,364 @@ import getStore from &#39;./bundles&#39;
 </ul>
 </section>
   </div>
+  <div class="slide hidden" id="slide-72">
+    <section class="slide-content"><blockquote>
+<p>src/bundles/app.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> initialState = { <span class="hljs-attr">title</span>: <span class="hljs-string">'Newsy'</span>, <span class="hljs-attr">drawer</span>: <span class="hljs-literal">false</span> }
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'app'</span>,
+  <span class="hljs-attr">reducer</span>: <span class="hljs-function">(<span class="hljs-params">state = initialState, action</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (action.type === <span class="hljs-string">'APP_DRAWER_TOGGLE'</span>) {
+      state.drawer = action.payload
+      <span class="hljs-keyword">return</span> state
+    }
+
+    <span class="hljs-keyword">return</span> state
+  },
+  <span class="hljs-attr">doToggleDrawer</span>: <span class="hljs-function"><span class="hljs-params">open</span> =&gt;</span> ({ dispatch }) =&gt;
+    dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'APP_DRAWER_TOGGLE'</span>, <span class="hljs-attr">payload</span>: open }),
+  <span class="hljs-attr">selectTitle</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.app.title,
+  <span class="hljs-attr">selectDrawer</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.app.drawer
+}
+</code></pre>
+</section>
+  </div>
   <div class="slide hidden" id="slide-73">
-    <section class="slide-content"><h2 id="deploying">Deploying</h2>
+    <section class="slide-content"><blockquote>
+<p>src/bundles/routes.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createRouteBundle } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler'</span>
+
+<span class="hljs-keyword">import</span> Articles <span class="hljs-keyword">from</span> <span class="hljs-string">'../components/articles'</span>
+<span class="hljs-keyword">import</span> Show <span class="hljs-keyword">from</span> <span class="hljs-string">'../components/article'</span>
+<span class="hljs-keyword">import</span> About <span class="hljs-keyword">from</span> <span class="hljs-string">'../components/about'</span>
+<span class="hljs-keyword">import</span> Custom <span class="hljs-keyword">from</span> <span class="hljs-string">'../components/custom'</span>
+<span class="hljs-keyword">import</span> Notfound <span class="hljs-keyword">from</span> <span class="hljs-string">'../components/notfound'</span>
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> createRouteBundle({
+  <span class="hljs-string">'/'</span>: Articles,
+  <span class="hljs-string">'/custom'</span>: Custom,
+  <span class="hljs-string">'/about'</span>: About,
+  <span class="hljs-string">'/:articleType/:id'</span>: Show,
+  <span class="hljs-string">'/*'</span>: Notfound
+})
+</code></pre>
 </section>
   </div>
   <div class="slide hidden" id="slide-74">
+    <section class="slide-content"><blockquote>
+<p>src/bundles/sources.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createAsyncResourceBundle, createSelector } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler'</span>
+
+<span class="hljs-comment">/**
+ * Sources Bundle
+ *
+ * The newsapi has a lot of potential sources you can access to get the
+ * latest news.
+ */</span>
+<span class="hljs-keyword">const</span> bundle = createAsyncResourceBundle({
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'sources'</span>,
+  <span class="hljs-attr">getPromise</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span>
+    fetch(<span class="hljs-string">'https://twilson63.jrscode.cloud/newsy/_find'</span>, {
+      <span class="hljs-attr">headers</span>: {
+        <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>,
+        <span class="hljs-attr">authorization</span>: <span class="hljs-string">'Basic bmV3c3k6bmV3c3k='</span>
+      },
+      <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+      <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({
+        <span class="hljs-attr">selector</span>: { <span class="hljs-attr">type</span>: <span class="hljs-string">'source'</span> }
+      })
+    }).then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res.json())
+})
+
+bundle.reactShouldFetchSources = createSelector(
+  <span class="hljs-string">'selectSourcesRaw'</span>,
+  sourcesData =&gt; {
+    <span class="hljs-keyword">if</span> (sourcesData.loading || sourcesData.data) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">actionCreator</span>: <span class="hljs-string">'doFetchSources'</span> }
+  }
+)
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> bundle
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-75">
+    <section class="slide-content"><blockquote>
+<p>src/bundles/article.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-comment">/* global fetch */</span>
+<span class="hljs-keyword">import</span> { createAsyncResourceBundle, createSelector } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler'</span>
+<span class="hljs-keyword">import</span> find <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/find'</span>
+<span class="hljs-keyword">import</span> propEq <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/propEq'</span>
+
+<span class="hljs-comment">/**
+ * Redux bundle for Articles
+ *
+ * This bundle manages the fetching of articles as well
+ * as finding the selected article
+ */</span>
+<span class="hljs-keyword">const</span> bundle = createAsyncResourceBundle({
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'articles'</span>,
+  <span class="hljs-attr">getPromise</span>: <span class="hljs-function">(<span class="hljs-params">{ getState }</span>) =&gt;</span> {
+    <span class="hljs-keyword">let</span> sources = getState().checkedSources.data.join(<span class="hljs-string">','</span>)
+    <span class="hljs-keyword">if</span> (sources.length === <span class="hljs-number">0</span>) {
+      sources = [<span class="hljs-string">'abc-news'</span>]
+    }
+
+    <span class="hljs-keyword">return</span> fetch(<span class="hljs-string">'https://twilson63.jrscode.cloud/newsy/_find'</span>, {
+      <span class="hljs-attr">headers</span>: {
+        <span class="hljs-string">'Content-Type'</span>: <span class="hljs-string">'application/json'</span>,
+        <span class="hljs-attr">authorization</span>: <span class="hljs-string">'Basic bmV3c3k6bmV3c3k='</span>
+      },
+      <span class="hljs-attr">method</span>: <span class="hljs-string">'POST'</span>,
+      <span class="hljs-attr">body</span>: <span class="hljs-built_in">JSON</span>.stringify({
+        <span class="hljs-attr">selector</span>: {
+          <span class="hljs-attr">type</span>: <span class="hljs-string">'article'</span>,
+          <span class="hljs-string">'source.id'</span>: {
+            <span class="hljs-attr">$in</span>: sources
+          }
+        }
+      })
+    })
+      .then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res.json())
+      .then(<span class="hljs-function"><span class="hljs-params">res</span> =&gt;</span> res.docs)
+  }
+})
+
+bundle.selectArticle = createSelector(
+  <span class="hljs-string">'selectRouteParams'</span>,
+  <span class="hljs-string">'selectArticles'</span>,
+  (routeParams, articles) =&gt; {
+    <span class="hljs-keyword">if</span> (articles) {
+      <span class="hljs-keyword">const</span> article = find(propEq(<span class="hljs-string">'_id'</span>, routeParams.id))(articles)
+      <span class="hljs-keyword">return</span> article
+    }
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">title</span>: <span class="hljs-string">'Article Not Found'</span> }
+  }
+)
+
+bundle.reactShouldFetchArticles = createSelector(
+  <span class="hljs-string">'selectArticlesRaw'</span>,
+  articlesData =&gt; {
+    <span class="hljs-keyword">if</span> (articlesData.loading || articlesData.data) {
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>
+    }
+    <span class="hljs-keyword">return</span> { <span class="hljs-attr">actionCreator</span>: <span class="hljs-string">'doFetchArticles'</span> }
+  }
+)
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> bundle
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-76">
+    <section class="slide-content"><blockquote>
+<p>src/bundles/checked-sources.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { createSelector } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler'</span>
+
+<span class="hljs-keyword">import</span> map <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/map'</span>
+<span class="hljs-keyword">import</span> append <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/append'</span>
+<span class="hljs-keyword">import</span> reject <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/reject'</span>
+<span class="hljs-keyword">import</span> equals <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/equals'</span>
+<span class="hljs-keyword">import</span> uniq <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/uniq'</span>
+<span class="hljs-keyword">import</span> contains <span class="hljs-keyword">from</span> <span class="hljs-string">'ramda/src/contains'</span>
+
+<span class="hljs-comment">/**
+ * Redux bundle for checked Sources
+ *
+ * This bundle keeps the state of the sources checked.
+ * And caches them so the user will always have the settings
+ * they used last.
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> {
+  <span class="hljs-attr">name</span>: <span class="hljs-string">'checkedSources'</span>,
+  <span class="hljs-attr">reducer</span>: <span class="hljs-function">(<span class="hljs-params">state = { data: [] }, action</span>) =&gt;</span> {
+    <span class="hljs-keyword">if</span> (action.type === <span class="hljs-string">'CHECKED_SOURCES_ADD'</span>) {
+      state.data = uniq(append(action.payload, state.data))
+      <span class="hljs-keyword">return</span> state
+    }
+    <span class="hljs-keyword">if</span> (action.type === <span class="hljs-string">'CHECKED_SOURCES_REMOVE'</span>) {
+      state.data = reject(equals(action.payload), state.data)
+      <span class="hljs-keyword">return</span> state
+    }
+
+    <span class="hljs-keyword">return</span> state
+  },
+  <span class="hljs-attr">doAddSource</span>: <span class="hljs-function"><span class="hljs-params">sourceId</span> =&gt;</span> ({ dispatch }) =&gt; {
+    dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'CHECKED_SOURCES_ADD'</span>, <span class="hljs-attr">payload</span>: sourceId })
+  },
+  <span class="hljs-attr">doRemoveSource</span>: <span class="hljs-function"><span class="hljs-params">sourceId</span> =&gt;</span> ({ dispatch }) =&gt; {
+    dispatch({ <span class="hljs-attr">type</span>: <span class="hljs-string">'CHECKED_SOURCES_REMOVE'</span>, <span class="hljs-attr">payload</span>: sourceId })
+  },
+  <span class="hljs-attr">selectChecked</span>: <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> state.checkedSources.data,
+  <span class="hljs-attr">selectCheckifySources</span>: createSelector(
+    <span class="hljs-string">'selectSources'</span>,
+    <span class="hljs-string">'selectChecked'</span>,
+    (sources, checked) =&gt; {
+      <span class="hljs-keyword">return</span> map(<span class="hljs-function"><span class="hljs-params">source</span> =&gt;</span> {
+        <span class="hljs-keyword">if</span> (contains(source.id, checked)) {
+          source.checked = <span class="hljs-literal">true</span>
+        } <span class="hljs-keyword">else</span> {
+          source.checked = <span class="hljs-literal">false</span>
+        }
+        <span class="hljs-keyword">return</span> source
+      }, sources || [])
+    }
+  ),
+  <span class="hljs-attr">persistActions</span>: [<span class="hljs-string">'CHECKED_SOURCES_ADD'</span>, <span class="hljs-string">'CHECKED_SOURCES_REMOVE'</span>]
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-77">
+    <section class="slide-content"><h2 id="deploying">Deploying</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-78">
     <section class="slide-content"><h1 id="https-zeit-co-"><a href="https://zeit.co/">https://zeit.co/</a></h1>
 <h2 id="instant-global-deployments">Instant Global Deployments</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-75">
+  <div class="slide hidden" id="slide-79">
+    <section class="slide-content"><blockquote>
+<p>serve.json</p>
+</blockquote>
+<pre><code>{
+  &quot;public&quot;: &quot;dist&quot;,
+  &quot;cleanUrls&quot;: false,
+  &quot;rewrites&quot;: [
+    { &quot;source&quot;: &quot;/&quot;, &quot;destination&quot;: &quot;/index.html&quot; },
+    { &quot;source&quot;: &quot;/index.html&quot;, &quot;destination&quot;: &quot;/index.html&quot; },
+    { &quot;source&quot;: &quot;/custom&quot;, &quot;destination&quot;: &quot;/index.html&quot; },
+    { &quot;source&quot;: &quot;/about&quot;, &quot;destination&quot;: &quot;/index.html&quot; },
+    { &quot;source&quot;: &quot;/articles/**&quot;, &quot;destination&quot;: &quot;/index.html&quot; }
+  ]
+}
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-80">
+    <section class="slide-content"><blockquote>
+<p>package.json</p>
+</blockquote>
+<pre><code>&quot;now&quot;: {
+  &quot;alias&quot;: &quot;newsy.io&quot;
+}
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-81">
     <section class="slide-content"><h3 id="setup">Setup</h3>
 <pre><code>npm install now -g
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-76">
+  <div class="slide hidden" id="slide-82">
+    <section class="slide-content"><blockquote>
+<p>src/utils/cache.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { getConfiguredCache } <span class="hljs-keyword">from</span> <span class="hljs-string">'money-clip'</span>
+
+<span class="hljs-comment">// This just creates a cache helper that is pre-configured</span>
+<span class="hljs-comment">// these options.</span>
+<span class="hljs-comment">// The version number should come from a config, this protects</span>
+<span class="hljs-comment">// from trying load cached data when the internal data structures</span>
+<span class="hljs-comment">// that your app expects have changed.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// Additionally, if you're caching user-specific data, you should build a</span>
+<span class="hljs-comment">// version string that includes some user identifier along with your actual</span>
+<span class="hljs-comment">// version number. This will ensure tha switching users won't result in</span>
+<span class="hljs-comment">// someone loading someone else's cached data.</span>
+<span class="hljs-comment">//</span>
+<span class="hljs-comment">// So, there are gotchas, but it sure is cool when you've got it all set up.</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> getConfiguredCache({
+  <span class="hljs-attr">maxAge</span>: <span class="hljs-number">1000</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span>,
+  <span class="hljs-attr">version</span>: <span class="hljs-number">1</span>
+})
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-83">
+    <section class="slide-content"><blockquote>
+<p>src/bundles/index.js</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-keyword">import</span> { composeBundles, createCacheBundle } <span class="hljs-keyword">from</span> <span class="hljs-string">'redux-bundler'</span>
+<span class="hljs-keyword">import</span> app <span class="hljs-keyword">from</span> <span class="hljs-string">'./app'</span>
+<span class="hljs-keyword">import</span> routes <span class="hljs-keyword">from</span> <span class="hljs-string">'./routes'</span>
+<span class="hljs-keyword">import</span> articles <span class="hljs-keyword">from</span> <span class="hljs-string">'./articles'</span>
+<span class="hljs-keyword">import</span> sources <span class="hljs-keyword">from</span> <span class="hljs-string">'./sources'</span>
+<span class="hljs-keyword">import</span> checkedSources <span class="hljs-keyword">from</span> <span class="hljs-string">'./checked-sources'</span>
+<span class="hljs-keyword">import</span> cache <span class="hljs-keyword">from</span> <span class="hljs-string">'../utils/cache'</span>
+
+<span class="hljs-comment">/**
+ * Redux Bundle Manifest
+ *
+ * This module returns a function `getStore`
+ * that can be used to create a redux store with
+ * all the reducers, action creators, and selectors
+ * for the application.
+ */</span>
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> composeBundles(
+  routes,
+  app,
+  articles,
+  sources,
+  checkedSources,
+  createCacheBundle(cache.set)
+)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-84">
     <section class="slide-content"><h2 id="service-workers">Service Workers</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-77">
+  <div class="slide hidden" id="slide-85">
+    <section class="slide-content"><p><a href="https://developers.google.com/web/tools/workbox/">https://developers.google.com/web/tools/workbox/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-86">
+    <section class="slide-content"><p><code>yarn add workbox-cli --dev</code></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-87">
+    <section class="slide-content"><blockquote>
+<p>public/index.html</p>
+</blockquote>
+<pre><code class="lang-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="javascript">
+  <span class="hljs-keyword">if</span> (<span class="hljs-string">'serviceWorker'</span> <span class="hljs-keyword">in</span> navigator) {
+    navigator.serviceWorker.register(<span class="hljs-string">'sw.js'</span>)
+    .then(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">registration</span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Service Worker registration successful with scope: '</span>,
+      registration.scope)
+    })
+    .catch(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">err</span>) </span>{
+      <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Service Worker registration failed: '</span>, err)
+    })
+  }
+</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-88">
     <section class="slide-content"><h2 id="intro">Intro</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-78">
+  <div class="slide hidden" id="slide-89">
     <section class="slide-content"><h3 id="workbox">Workbox</h3>
 <pre><code>npm install workbox-cli
 </code></pre></section>
   </div>
-  <div class="slide hidden" id="slide-79">
+  <div class="slide hidden" id="slide-90">
     <section class="slide-content"><h2 id="lab">Lab</h2>
 </section>
   </div>
-  <div class="slide hidden" id="slide-80">
-    <section class="slide-content"></section>
-  </div>
-  <div class="slide hidden author-slide" id="slide-81">
-    <section class="slide-content"><div class="author">
-  <h1 class="name">Tom Wilson</h1>
-    <h3 class="twitter">
-      <a href="http://twitter.com/@twilson63">@twilson63</a>
-    </h3>
-    <h3 class="url">
-      <a href="https://twilson63.xyz">https://twilson63.xyz</a>
-    </h3>
-</div>
+  <div class="slide hidden" id="slide-91">
+    <section class="slide-content"><p><a href="https://join.slack.com/t/jrs-training/shared_invite/enQtMzc2NTQ5NDI3MzYzLTMyODQwNmQyNDc4YzgxYzlkYWFhMjY5ZjZiMzcxNTg3MDgwYWJkOGM3MWFjNWZhMmJjMzI4ZTg4NjJhOGU1MDg">https://join.slack.com/t/jrs-training/shared_invite/enQtMzc2NTQ5NDI3MzYzLTMyODQwNmQyNDc4YzgxYzlkYWFhMjY5ZjZiMzcxNTg3MDgwYWJkOGM3MWFjNWZhMmJjMzI4ZTg4NjJhOGU1MDg</a></p>
 </section>
   </div>
 

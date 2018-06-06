@@ -17,6 +17,12 @@
     <meta name="version" content="1.1" />
   </head>
   <body style="margin: 0;padding: 0">
+    <noscript>Your browser does not support JavaScript! To use Newsy you need Javascript</noscript>
+    <div id="app" style="min-height: 100vh">
+      <div style="height: 100vh;display:flex;flex: 1;align-items:center;justify-content:center;background-color: purple">
+        <h1 style="font-family: roboto;color:#ffffff">Installing Newsy.io</h1>
+      </div>
+    </div>
     <script>
       if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('sw.js')
@@ -29,13 +35,6 @@
         })
       }
     </script>
-    <noscript>Your browser does not support JavaScript! To use Newsy you need Javascript</noscript>
-    <div id="app" style="min-height: 100vh">
-      <div style="height: 100vh;display:flex;flex: 1;align-items:center;justify-content:center;background-color: purple">
-        <h1 style="font-family: roboto;color:#ffffff">Installing Newsy.io</h1>
-      </div>
-    </div>
-
     <script src="../src/index.js"></script>
   </body>
 </html>

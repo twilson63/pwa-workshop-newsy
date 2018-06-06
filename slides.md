@@ -1,8 +1,8 @@
 title: PWA and Offline First Workshop
 author:
-  name: Tom Wilson
-  twitter: twilson63
-  url: https://twilson63.xyz
+name: Tom Wilson
+twitter: twilson63
+url: https://twilson63.xyz
 output: index.html
 controls: true
 
@@ -309,6 +309,14 @@ https://reactjs.org/docs/react-component.html#the-component-lifecycle
 
 --
 
+## Common React Patterns
+
+* Presentation/Container
+* Render Props
+* Higher Order Components
+
+--
+
 ### Exercise
 
 Create a React Hello World Component
@@ -385,6 +393,34 @@ https://material.io/design/
 
 --
 
+### Style
+
+> example
+
+```js
+import { withStyle } from '@material-ui/core/styles'
+
+const MyComponent = ({ classes }) => (
+  <div className={classes.root}>
+    <h1 className={classes.h1}>Hello World</h1>
+  </div>
+)
+
+const styles = theme => ({
+  root: {
+    color: '#fff',
+    backgroundColor: 'rgba(0,0,0,.8)'
+  },
+  h1: {
+    fontSize: '3em'
+  }
+})
+
+export default withStyles(style)(MyComponent)
+```
+
+--
+
 ### Common Components
 
 * AppBar
@@ -402,21 +438,148 @@ https://material-ui.com/demos/app-bar/
 
 --
 
+### Header Component
+
+> src/components/header
+
+```js
+import React from 'react'
+
+import { withStyles } from '@material-ui/core/styles'
+
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import Button from '@material-ui/core/Button'
+
+/**
+ * Header Component
+ *
+ * This component provides the header for the application
+ */
+const Header = ({ children, classes }) => (
+  <AppBar position="sticky">
+    <Toolbar>
+      <IconButton color="inherit" aria-label="Menu">
+        <MenuIcon />
+      </IconButton>
+      <Typography className={classes.flex} variant="title" color="inherit">
+        {children}
+      </Typography>
+      <Button color="inherit">Refresh</Button>
+    </Toolbar>
+  </AppBar>
+)
+
+const styles = theme => ({
+  flex: {
+    flex: 1
+  }
+})
+
+export default withStyles(styles)(Header)
+```
+
+--
+
 ### Card
 
 https://material-ui.com/demos/cards/
 
 --
 
-### List
+### About Card
 
-https://material-ui.com/demos/lists/
+```js
+import React from 'react'
 
---
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
 
-### Drawer
+/**
+ * About Component
+ *
+ * This component contains all of the about information for the application
+ *
+ */
+const About = ({ classes }) => (
+  <div className={classes.root}>
+    <Card>
+      <CardContent>
+        <Typography className={classes.headline} variant="headline">
+          About Newsy
+        </Typography>
+        <Typography className={classes.subheading} variant="subheading">
+          Get the news you want from the sources you trust!
+        </Typography>
+        <Typography className={classes.p} component="p">
+          Newsy is a customized mobile news application, enabling you to get the
+          news you want from the sources that you trust.
+        </Typography>
+        <Typography className={classes.p} component="p">
+          This app was built for learning purposes and is provided as is. If you
+          are interested in adding new features or would like to report bugs or
+          make suggestions, please visit the project repository on github.{' '}
+          <br />
+          <a
+            className={classes.a}
+            target="_new"
+            href="https://github.com/twilson63/newsy"
+          >
+            https://github.com/twilson63/newsy
+          </a>
+        </Typography>
+        <Typography className={classes.p} component="p">
+          This app was built by the instructors of the JRS Coding School.
+          <br />
+          <a className={classes.a} target="_new" href="http://jrscode.com">
+            http://jrscode.com
+          </a>
+        </Typography>
+        <Typography className={classes.p} component="p">
+          The data of the application is provided by newsapi.org. <br />
+          <a className={classes.a} target="_new" href="https://newsapi.org">
+            https://newsapi.org
+          </a>
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button>Back to Articles</Button>
+      </CardActions>
+    </Card>
+  </div>
+)
 
-https://material-ui.com/demos/drawers/
+const styles = theme => ({
+  root: {
+    margin: '8px'
+  },
+  headline: {
+    marginBottom: '16px'
+  },
+  subheading: {
+    fontSize: '1.2em',
+    color: 'lightgray',
+    marginBottom: '16px'
+  },
+  p: {
+    marginTop: '8px',
+    marginBottom: '16px'
+  },
+  a: {
+    marginTop: '8px'
+  }
+})
+
+export default withStyles(styles)(About)
+```
 
 --
 
@@ -426,14 +589,238 @@ https://material-ui.com/demos/avatars/
 
 --
 
-# Style
+### Avatar
+
+> src/components/news-icon.js
+
+```js
+import React from 'react'
+
+import { withStyles } from '@material-ui/core/styles'
+import Avatar from '@material-ui/core/Avatar'
+import NewsIcon from '../assets/news-avatar.png'
+import purple from '@material-ui/core/colors/purple'
+
+/**
+ * News Avatar Component
+ *
+ */
+const styles = theme => {
+  return {
+    purpleAvatar: {
+      margin: 10,
+      backgroundColor: purple
+    }
+  }
+}
+
+export default withStyles(styles)(() => {
+  return <Avatar src={NewsIcon} alt="newsy" />
+})
+```
 
 --
 
-### Style
+### List
 
-* themes
-* withStyle
+https://material-ui.com/demos/lists/
+
+--
+
+### List Sources
+
+> src/component/sources.js
+
+```js
+import React from 'react'
+
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Checkbox from '@material-ui/core/Checkbox'
+
+import map from 'ramda/src/map'
+
+const createList = () =>
+  map(source => (
+    <ListItem key={source.id}>
+      <Checkbox tabIndex={-1} disableRipple />
+      <ListItemText>{source.name}</ListItemText>
+    </ListItem>
+  ))
+
+const Sources = ({ classes, sources }) => {
+  if (sourcesIsLoading) {
+    return <Spinner />
+  }
+  const list = createList()
+  return <List>{list(sources || [])}</List>
+}
+
+export default Sources
+```
+
+--
+
+> src/component/custom.js
+
+```js
+import React from 'react'
+import { connect } from 'redux-bundler-react'
+
+import { withStyles } from '@material-ui/core/styles'
+import Card from '@material-ui/core/Card'
+import CardActions from '@material-ui/core/CardActions'
+import CardContent from '@material-ui/core/CardContent'
+import CardMedia from '@material-ui/core/CardMedia'
+import Button from '@material-ui/core/Button'
+import Typography from '@material-ui/core/Typography'
+
+import ListSources from './sources'
+
+import getSources from '../lib/get-sources'
+const sources = getSources()
+
+/**
+ * Customize your sources
+ *
+ * this component provides a checkbox list of sources you can use to
+ * customize your news.
+ */
+const Custom = ({ classes }) => (
+  <div className={classes.root}>
+    <Card>
+      <CardContent>
+        <Typography className={classes.headline} variant="headline">
+          Customize News
+        </Typography>
+        <ListSources source={sources} />
+      </CardContent>
+      <CardActions>
+        <Button>Back to Articles</Button>
+      </CardActions>
+    </Card>
+  </div>
+)
+
+const styles = theme => ({
+  root: {
+    margin: '8px'
+  },
+  headline: {
+    marginBottom: '16px'
+  },
+  subheading: {
+    marginBottom: '16px'
+  }
+})
+
+export default withStyles(styles)(Custom)
+```
+
+--
+
+```js
+import React from 'react'
+
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+import Typography from '@material-ui/core/Typography'
+import map from 'ramda/src/map'
+import NewsIcon from './news-icon'
+
+import getArticles from '../lib/get-articles'
+// TODO: remove when we add redux
+const articles = getArticles()
+
+const createList = () =>
+  map(article => (
+    <ListItem key={article._id} button>
+      <NewsIcon />
+      <ListItemText>
+        <div style={{ float: 'right' }}>
+          <Typography component="p">{article.source.name}</Typography>
+        </div>
+        {article.title}
+      </ListItemText>
+    </ListItem>
+  ))
+
+/**
+ * Articles Component
+ *
+ * A component that shows all the articles for your custom sources list
+ */
+const Articles = ({ classes, articles }) => {
+  const list = createList()
+  return <List>{list(articles || [])}</List>
+}
+
+export default Articles
+```
+
+--
+
+### Drawer
+
+https://material-ui.com/demos/drawers/
+
+--
+
+> src/components/drawer.js
+
+```js
+import React from 'react'
+
+import Drawer from '@material-ui/core/Drawer'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
+
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemText from '@material-ui/core/ListItemText'
+
+/**
+ * AppDrawer
+ *
+ * The navigation component
+ *
+ */
+const AppDrawer = ({ classes }) => (
+  <Drawer open={false}>
+    <div className={classes.list} tabIndex={0} role="button">
+      <Typography className={classes.menuTitle} variant="display1">
+        Newsy Menu
+      </Typography>
+      <List>
+        <ListItem button>
+          <ListItemText>My News</ListItemText>
+        </ListItem>
+        <ListItem button>
+          <ListItemText>Customize</ListItemText>
+        </ListItem>
+        <ListItem button>
+          <ListItemText>About</ListItemText>
+        </ListItem>
+      </List>
+    </div>
+  </Drawer>
+)
+
+const styles = {
+  list: {
+    width: 250
+  },
+  menuTitle: {
+    textAlign: 'center',
+    marginTop: '8px',
+    marginBottom: '16px'
+  }
+}
+
+export default withStyles(styles)(AppDrawer)
+```
 
 --
 
@@ -447,64 +834,6 @@ import theme from './theme'
   <App />
 </MuiThemeProvider>
 ```
-
---
-
-## Lab
-
---
-
-* Theme
-* AppBar
-
---
-
-## Exercise
-
-Create a list component called articles:
-
-```js
-const sample = [
-  {
-    title: 'An Awesome Article',
-    url: 'A link',
-    _id: 'uniqueidentifier',
-    imageUrl: 'https://placehold.it/320/320'
-  }
-]
-```
-
---
-
-## Exercise
-
-Create an About Card Component
-
---
-
-## Exercise
-
-Create a List Articles Component
-
---
-
-## Exercise
-
-Create a Show Article Component
-
---
-
-## Exercise
-
-Create a Custom List Component with checkboxes
-
---
-
-## Common React Patterns
-
-* Presentation/Container
-* Render Props
-* Higher Order Components
 
 --
 
@@ -604,6 +933,222 @@ export default {
 
 --
 
+> src/bundles/app.js
+
+```js
+const initialState = { title: 'Newsy', drawer: false }
+
+export default {
+  name: 'app',
+  reducer: (state = initialState, action) => {
+    if (action.type === 'APP_DRAWER_TOGGLE') {
+      state.drawer = action.payload
+      return state
+    }
+
+    return state
+  },
+  doToggleDrawer: open => ({ dispatch }) =>
+    dispatch({ type: 'APP_DRAWER_TOGGLE', payload: open }),
+  selectTitle: state => state.app.title,
+  selectDrawer: state => state.app.drawer
+}
+```
+
+--
+
+> src/bundles/routes.js
+
+```js
+import { createRouteBundle } from 'redux-bundler'
+
+import Articles from '../components/articles'
+import Show from '../components/article'
+import About from '../components/about'
+import Custom from '../components/custom'
+import Notfound from '../components/notfound'
+
+export default createRouteBundle({
+  '/': Articles,
+  '/custom': Custom,
+  '/about': About,
+  '/:articleType/:id': Show,
+  '/*': Notfound
+})
+```
+
+--
+
+> src/bundles/sources.js
+
+```js
+import { createAsyncResourceBundle, createSelector } from 'redux-bundler'
+
+/**
+ * Sources Bundle
+ *
+ * The newsapi has a lot of potential sources you can access to get the
+ * latest news.
+ */
+const bundle = createAsyncResourceBundle({
+  name: 'sources',
+  getPromise: () =>
+    fetch('https://twilson63.jrscode.cloud/newsy/_find', {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Basic bmV3c3k6bmV3c3k='
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        selector: { type: 'source' }
+      })
+    }).then(res => res.json())
+})
+
+bundle.reactShouldFetchSources = createSelector(
+  'selectSourcesRaw',
+  sourcesData => {
+    if (sourcesData.loading || sourcesData.data) {
+      return false
+    }
+    return { actionCreator: 'doFetchSources' }
+  }
+)
+
+export default bundle
+```
+
+--
+
+> src/bundles/article.js
+
+```js
+/* global fetch */
+import { createAsyncResourceBundle, createSelector } from 'redux-bundler'
+import find from 'ramda/src/find'
+import propEq from 'ramda/src/propEq'
+
+/**
+ * Redux bundle for Articles
+ *
+ * This bundle manages the fetching of articles as well
+ * as finding the selected article
+ */
+const bundle = createAsyncResourceBundle({
+  name: 'articles',
+  getPromise: ({ getState }) => {
+    let sources = getState().checkedSources.data.join(',')
+    if (sources.length === 0) {
+      sources = ['abc-news']
+    }
+
+    return fetch('https://twilson63.jrscode.cloud/newsy/_find', {
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: 'Basic bmV3c3k6bmV3c3k='
+      },
+      method: 'POST',
+      body: JSON.stringify({
+        selector: {
+          type: 'article',
+          'source.id': {
+            $in: sources
+          }
+        }
+      })
+    })
+      .then(res => res.json())
+      .then(res => res.docs)
+  }
+})
+
+bundle.selectArticle = createSelector(
+  'selectRouteParams',
+  'selectArticles',
+  (routeParams, articles) => {
+    if (articles) {
+      const article = find(propEq('_id', routeParams.id))(articles)
+      return article
+    }
+    return { title: 'Article Not Found' }
+  }
+)
+
+bundle.reactShouldFetchArticles = createSelector(
+  'selectArticlesRaw',
+  articlesData => {
+    if (articlesData.loading || articlesData.data) {
+      return false
+    }
+    return { actionCreator: 'doFetchArticles' }
+  }
+)
+
+export default bundle
+```
+
+--
+
+> src/bundles/checked-sources.js
+
+```js
+import { createSelector } from 'redux-bundler'
+
+import map from 'ramda/src/map'
+import append from 'ramda/src/append'
+import reject from 'ramda/src/reject'
+import equals from 'ramda/src/equals'
+import uniq from 'ramda/src/uniq'
+import contains from 'ramda/src/contains'
+
+/**
+ * Redux bundle for checked Sources
+ *
+ * This bundle keeps the state of the sources checked.
+ * And caches them so the user will always have the settings
+ * they used last.
+ */
+export default {
+  name: 'checkedSources',
+  reducer: (state = { data: [] }, action) => {
+    if (action.type === 'CHECKED_SOURCES_ADD') {
+      state.data = uniq(append(action.payload, state.data))
+      return state
+    }
+    if (action.type === 'CHECKED_SOURCES_REMOVE') {
+      state.data = reject(equals(action.payload), state.data)
+      return state
+    }
+
+    return state
+  },
+  doAddSource: sourceId => ({ dispatch }) => {
+    dispatch({ type: 'CHECKED_SOURCES_ADD', payload: sourceId })
+  },
+  doRemoveSource: sourceId => ({ dispatch }) => {
+    dispatch({ type: 'CHECKED_SOURCES_REMOVE', payload: sourceId })
+  },
+  selectChecked: state => state.checkedSources.data,
+  selectCheckifySources: createSelector(
+    'selectSources',
+    'selectChecked',
+    (sources, checked) => {
+      return map(source => {
+        if (contains(source.id, checked)) {
+          source.checked = true
+        } else {
+          source.checked = false
+        }
+        return source
+      }, sources || [])
+    }
+  ),
+  persistActions: ['CHECKED_SOURCES_ADD', 'CHECKED_SOURCES_REMOVE']
+}
+```
+
+--
+
 ## Deploying
 
 --
@@ -611,6 +1156,34 @@ export default {
 # https://zeit.co/
 
 ## Instant Global Deployments
+
+--
+
+> serve.json
+
+```
+{
+  "public": "dist",
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/index.html", "destination": "/index.html" },
+    { "source": "/custom", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/articles/**", "destination": "/index.html" }
+  ]
+}
+```
+
+--
+
+> package.json
+
+```
+"now": {
+  "alias": "newsy.io"
+}
+```
 
 --
 
@@ -622,7 +1195,90 @@ npm install now -g
 
 --
 
+> src/utils/cache.js
+
+```js
+import { getConfiguredCache } from 'money-clip'
+
+// This just creates a cache helper that is pre-configured
+// these options.
+// The version number should come from a config, this protects
+// from trying load cached data when the internal data structures
+// that your app expects have changed.
+//
+// Additionally, if you're caching user-specific data, you should build a
+// version string that includes some user identifier along with your actual
+// version number. This will ensure tha switching users won't result in
+// someone loading someone else's cached data.
+//
+// So, there are gotchas, but it sure is cool when you've got it all set up.
+export default getConfiguredCache({
+  maxAge: 1000 * 60 * 60,
+  version: 1
+})
+```
+
+--
+
+> src/bundles/index.js
+
+```js
+import { composeBundles, createCacheBundle } from 'redux-bundler'
+import app from './app'
+import routes from './routes'
+import articles from './articles'
+import sources from './sources'
+import checkedSources from './checked-sources'
+import cache from '../utils/cache'
+
+/**
+ * Redux Bundle Manifest
+ *
+ * This module returns a function `getStore`
+ * that can be used to create a redux store with
+ * all the reducers, action creators, and selectors
+ * for the application.
+ */
+export default composeBundles(
+  routes,
+  app,
+  articles,
+  sources,
+  checkedSources,
+  createCacheBundle(cache.set)
+)
+```
+
+--
+
 ## Service Workers
+
+--
+
+https://developers.google.com/web/tools/workbox/
+
+--
+
+`yarn add workbox-cli --dev`
+
+--
+
+> public/index.html
+
+```html
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+    .then(function (registration) {
+      console.log('Service Worker registration successful with scope: ',
+      registration.scope)
+    })
+    .catch(function (err) {
+      console.log('Service Worker registration failed: ', err)
+    })
+  }
+</script>
+```
 
 --
 
@@ -641,3 +1297,5 @@ npm install workbox-cli
 ## Lab
 
 --
+
+https://join.slack.com/t/jrs-training/shared_invite/enQtMzc2NTQ5NDI3MzYzLTMyODQwNmQyNDc4YzgxYzlkYWFhMjY5ZjZiMzcxNTg3MDgwYWJkOGM3MWFjNWZhMmJjMzI4ZTg4NjJhOGU1MDg
