@@ -2,7 +2,11 @@
 import { createAsyncResourceBundle, createSelector } from 'redux-bundler'
 import find from 'ramda/src/find'
 import propEq from 'ramda/src/propEq'
+import sha1 from 'sha1'
+import map from 'ramda/src/map'
+import assoc from 'ramda/src/assoc'
 
+const tag = article => assoc('_id', sha1(article.url), article)
 /**
  * Redux bundle for Articles
  *
@@ -16,24 +20,31 @@ const bundle = createAsyncResourceBundle({
     if (sources.length === 0) {
       sources = ['abc-news']
     }
-
-    return fetch('https://twilson63.jrscode.cloud/newsy/_find', {
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: 'Basic bmV3c3k6bmV3c3k='
-      },
-      method: 'POST',
-      body: JSON.stringify({
-        selector: {
-          type: 'article',
-          'source.id': {
-            $in: sources
-          }
-        }
-      })
-    })
+    return fetch(
+      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+        process.env.NEWS_API
+      }`
+    )
       .then(res => res.json())
-      .then(res => res.docs)
+      .then(res => res.articles)
+      .then(map(tag))
+    // return fetch('https://twilson63.jrscode.cloud/newsy/_find', {
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization: 'Basic bmV3c3k6bmV3c3k='
+    //   },
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     selector: {
+    //       type: 'article',
+    //       'source.id': {
+    //         $in: sources
+    //       }
+    //     }
+    //   })
+    // })
+    //   .then(res => res.json())
+    //   .then(res => res.docs)
   }
 })
 

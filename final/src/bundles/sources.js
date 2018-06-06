@@ -18,7 +18,10 @@ const bundle = createAsyncResourceBundle({
       body: JSON.stringify({
         selector: { type: 'source' }
       })
-    }).then(res => res.json())
+    })
+      .then(res => res.json())
+
+      .then(result => result.docs)
 })
 
 bundle.reactShouldFetchSources = createSelector(
