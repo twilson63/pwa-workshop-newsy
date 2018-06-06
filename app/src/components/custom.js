@@ -11,16 +11,13 @@ import Typography from '@material-ui/core/Typography'
 
 import ListSources from './sources'
 
-import getSources from '../lib/get-sources'
-const sources = getSources()
-
 /**
  * Customize your sources
  *
  * this component provides a checkbox list of sources you can use to
  * customize your news.
  */
-const Custom = ({ classes }) => (
+const Custom = ({ classes, sources }) => (
   <div className={classes.root}>
     <Card>
       <CardContent>
@@ -48,4 +45,9 @@ const styles = theme => ({
   }
 })
 
-export default withStyles(styles)(Custom)
+export default withStyles(styles)(
+  connect(
+    'selectSources',
+    Custom
+  )
+)
