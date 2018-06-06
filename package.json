@@ -1,0 +1,10 @@
+{
+  "name": "pwa-workshop-newsy",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": {},
+  "license": "MIT",
+  "devDependencies": {
+    "cleaver": "^0.8.7"
+  }
+}

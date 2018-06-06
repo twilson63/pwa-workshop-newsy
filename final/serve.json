@@ -1,0 +1,11 @@
+{
+  "public": "dist",
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/index.html", "destination": "/index.html" },
+    { "source": "/custom", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/articles/**", "destination": "/index.html" }
+  ]
+}

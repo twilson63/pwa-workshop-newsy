@@ -1,0 +1,1111 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <title>PWA and Offline First Workshop</title>
+  <style type="text/css">
+    body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #222;
+  font-size: 100%;
+}
+
+.slide {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  background-color: #f7f7f7;
+}
+
+.slide-content {
+  width: 800px;
+  height: 600px;
+  overflow: hidden;
+  margin: 80px auto 0 auto;
+  padding: 30px;
+
+  font-weight: 200;
+  font-size: 200%;
+  line-height: 1.375;
+}
+
+.controls {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}
+
+.arrow {
+  width: 0; height: 0;
+  border: 30px solid #333;
+  float: left;
+  margin-right: 30px;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.prev {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-left-color: transparent;
+
+  border-left-width: 0;
+  border-right-width: 50px;
+}
+
+.next {
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+
+  border-left-width: 50px;
+  border-right-width: 0;
+}
+
+.prev:hover {
+  border-right-color: #888;
+  cursor: pointer;
+}
+
+.next:hover {
+  border-left-color: #888;
+  cursor: pointer;
+}
+
+h1 {
+  font-size: 300%;
+  line-height: 1.2;
+  text-align: center;
+  margin: 170px 0 0;
+}
+
+h2 {
+  font-size: 100%;
+  line-height: 1.2;
+  margin: 5px 0;
+  text-align: center;
+  font-weight: 200;
+}
+
+h3 {
+  font-size: 140%;
+  line-height: 1.2;
+  border-bottom: 1px solid #aaa;
+  margin: 0;
+  padding-bottom: 15px;
+}
+
+ul {
+  padding: 20px 0 0 60px;
+  font-weight: 200;
+  line-height: 1.375;
+}
+
+.author h1 {
+  font-size: 170%;
+  font-weight: 200;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.author h3 {
+  font-weight: 100;
+  text-align: center;
+  font-size: 95%;
+  border: none;
+}
+
+a {
+  text-decoration: none;
+  color: #44a4dd;
+}
+
+a:hover {
+  color: #66b5ff;
+}
+
+pre {
+  font-size: 60%;
+  line-height: 1.3;
+}
+
+.progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  z-index: 1;
+}
+
+.progress-bar {
+  width: 0%;
+  height: 3px;
+  background-color: #b4b4b4;
+
+  -webkit-transition: width 0.05s ease-out;
+  -moz-transition: width 0.05s ease-out;
+  -o-transition: width 0.05s ease-out;
+  transition: width 0.05s ease-out;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 850px) {
+
+  body {
+    font-size: 70%;
+  }
+
+  .slide-content {
+    width: auto;
+  }
+
+  img {
+    width: 100%;
+  }
+
+  h1 {
+    margin-top: 120px;
+  }
+
+  .prev, .prev:hover {
+    border-right-color: rgba(135, 135, 135, 0.5);
+  }
+
+  .next, .next:hover {
+    border-left-color: rgba(135, 135, 135, 0.5);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 50%;
+    overflow: hidden;
+  }
+
+  .slide-content {
+    padding: 10px;
+    margin-top: 10px;
+    height: 340px;
+  }
+
+  h1 {
+    margin-top: 50px;
+  }
+
+  ul {
+    padding-left: 25px;
+  }
+}
+
+@media print {
+  * {
+    -webkit-print-color-adjust: exact;
+  }
+
+  @page {
+    size: letter;
+  }
+
+  .hidden {
+    display: inline;
+  }
+
+  html {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  body {
+    margin: 0 auto !important;
+    border: 0;
+    padding: 0;
+    float: none !important;
+    overflow: visible;
+    background: none !important;
+    font-size: 52%;
+  }
+
+  .progress, .controls {
+    display: none;
+  }
+
+  .slide {
+    position: static;
+  }
+
+  .slide-content {
+    border: 1px solid #222;
+    margin-top: 0;
+    margin-bottom: 40px;
+    height: 3.5in;
+    overflow: visible;
+  }
+
+  .slide:nth-child(even) {
+    /* 2 slides per page */
+    page-break-before: always;
+  }
+}
+
+/*
+
+github.com style (c) Vasily Polovnyov <vast@whiteants.net>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #333;
+  background: #f8f8f8;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #998;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-subst {
+  color: #333;
+  font-weight: bold;
+}
+
+.hljs-number,
+.hljs-literal,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag .hljs-attr {
+  color: #008080;
+}
+
+.hljs-string,
+.hljs-doctag {
+  color: #d14;
+}
+
+.hljs-title,
+.hljs-section,
+.hljs-selector-id {
+  color: #900;
+  font-weight: bold;
+}
+
+.hljs-subst {
+  font-weight: normal;
+}
+
+.hljs-type,
+.hljs-class .hljs-title {
+  color: #458;
+  font-weight: bold;
+}
+
+.hljs-tag,
+.hljs-name,
+.hljs-attribute {
+  color: #000080;
+  font-weight: normal;
+}
+
+.hljs-regexp,
+.hljs-link {
+  color: #009926;
+}
+
+.hljs-symbol,
+.hljs-bullet {
+  color: #990073;
+}
+
+.hljs-built_in,
+.hljs-builtin-name {
+  color: #0086b3;
+}
+
+.hljs-meta {
+  color: #999;
+  font-weight: bold;
+}
+
+.hljs-deletion {
+  background: #fdd;
+}
+
+.hljs-addition {
+  background: #dfd;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+
+  </style>
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-bar"></div>
+  </div>
+
+  <div class="slide" id="slide-1">
+    <section class="slide-content"><h1 id="pwa-and-offline-first">PWA and Offline First</h1>
+<h2 id="workshop-syntaxcon-2018">Workshop - SyntaxCon 2018</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-2">
+    <section class="slide-content"><h2 id="welcome">Welcome</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-3">
+    <section class="slide-content"><h2 id="introductions">Introductions</h2>
+<ul>
+<li>Name</li>
+<li>What got you into coding?</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-4">
+    <section class="slide-content"><h3 id="code-wars">Code Wars</h3>
+<p>Not often, but once in a while, comes a moment,
+when things align in a way that can amazing things
+can be achieved.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-5">
+    <section class="slide-content"><h1 id="may-the-force-be-with-you">May the force be with you</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-6">
+    <section class="slide-content"><h3 id="agenda">Agenda</h3>
+<ul>
+<li>Getting Started</li>
+<li>React in 50 Minutes</li>
+<li>Lab (create a react project)</li>
+<li>Material UI in 50 Minutes</li>
+<li>Lab (Create List and Show Components)</li>
+<li>Lunch</li>
+<li>Redux / Redux Bundler in 50 Minutes</li>
+<li>Lab (Create a Redux Bundle)</li>
+<li>Sevice Workers in 30 Minutes</li>
+<li>Lab (WorkBox)</li>
+<li>Deploying with Now and Serve</li>
+<li>Lab</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-7">
+    <section class="slide-content"><h1 id="getting-started">Getting Started</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-8">
+    <section class="slide-content"><h3 id="requirements">Requirements</h3>
+<ul>
+<li>Text Editor (Atom, Code, Vim)</li>
+<li>Terminal (<a href="https://hyper.is/">https://hyper.is/</a>)</li>
+<li>NodeJS (<a href="https://nodejs.org">https://nodejs.org</a>) -v8+</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-9">
+    <section class="slide-content"><h3 id="setup">Setup</h3>
+<pre><code class="lang-js">npm install yarn -g
+mkdir newsy
+cd newsy
+yarn init -y
+yarn add parcel-bundler --dev
+npx json -I -f package.json -e <span class="hljs-string">'this.scripts = { "dev": "parcel public/index.html" }'</span>
+mkdir public
+touch public/index.html
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-10">
+    <section class="slide-content"><h1 id="what-is-a-pwa-">What is a PWA?</h1>
+<p>Deliver an app like experience using modern web capabilities</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-11">
+    <section class="slide-content"><h1 id="what-is-offline-first-">What is offline first?</h1>
+<p>Offline first is an approach to software development in which developers build an applications core features to function with or without an internet connection.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-12">
+    <section class="slide-content"><h3 id="how-">How?</h3>
+<ul>
+<li>Modern JavaScript</li>
+<li>Fast Browsers</li>
+<li>with Databases</li>
+<li>and apis that control side effects</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-13">
+    <section class="slide-content"><h1 id="so-lets-build-a-pwa">So lets build a PWA</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-14">
+    <section class="slide-content"><h1 id="what-are-we-going-to-build-">What are we going to build?</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-15">
+    <section class="slide-content"><p>We are going to build a news app that the user can customize from 100s of sources to tailor their news experience. And it will work offline.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-16">
+    <section class="slide-content"><h3 id="newsapi">NewsAPI</h3>
+<ul>
+<li>Register for a free account on newsapi.org</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-17">
+    <section class="slide-content"><h2 id="how-does-a-computer-run-javascript-">How does a computer run JavaScript?</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-18">
+    <section class="slide-content"><h3 id="vanilla-dom">Vanilla DOM</h3>
+<pre><code>mkdir src
+touch src/index.html
+</code></pre><pre><code class="lang-js"><span class="hljs-keyword">const</span> el = <span class="hljs-built_in">document</span>.createElement(<span class="hljs-string">'div'</span>)
+el.innerHTML = <span class="hljs-string">'&lt;h1&gt;Hello World&lt;/h1&gt;'</span>
+<span class="hljs-built_in">document</span>.body.appendChild(el)
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-19">
+    <section class="slide-content"><h3 id="public-index-html">public index.html</h3>
+<pre><code class="lang-html"><span class="hljs-meta">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Newsy<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">noscript</span>&gt;</span>This application requires JavaScript to run!<span class="hljs-tag">&lt;/<span class="hljs-name">noscript</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"app"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"../src/index.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-20">
+    <section class="slide-content"><h3 id="modern-frameworks">Modern Frameworks</h3>
+<p>Provide a level of abstraction to change the mental model to empower developers to more.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-21">
+    <section class="slide-content"><h3 id="tools">Tools</h3>
+<ul>
+<li>prettier - <code>prettier --no-semi --single-quote --write &#39;src/**/*.js&#39;</code></li>
+<li>lynt - <code>lynt --react</code></li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-22">
+    <section class="slide-content"><h2 id="break">Break</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-23">
+    <section class="slide-content"><h2 id="introducing-react">Introducing React</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-24">
+    <section class="slide-content"><p>React provides an abstraction for the presentation or view of an application, it allows us as developers to think about presentation, the way designers think about presentation. As components. A composition of components that construct an user experience.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-25">
+    <section class="slide-content"><p>This takes us a step away from the DOM, and gives us the ability to reason about ux with components</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-26">
+    <section class="slide-content"><h2 id="setting-up-react">Setting up React</h2>
+<blockquote>
+<p>There are many ways to set up react.</p>
+</blockquote>
+<pre><code>yarn add react react-dom
+touch src/index.js
+# open project with editor (atom .)
+yarn dev
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-27">
+    <section class="slide-content"><h2 id="react-dom-app">React Dom App</h2>
+<pre><code>import React from &#39;react&#39;
+import ReactDOM from &#39;react-dom&#39;
+
+const el = React.createElement(&#39;div&#39;, null, &#39;Hello World&#39;)
+
+ReactDOM.render(el, document.getElementById(&#39;app&#39;))
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-28">
+    <section class="slide-content"><h2 id="jsx">JSX</h2>
+<p>Using <code>createElement</code> is no fun, the DOM has innerHTML, react has &#39;JSX&#39;</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> value = <span class="hljs-string">'world'</span>
+
+<span class="hljs-keyword">const</span> App = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> {
+  <span class="hljs-keyword">return</span> <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>Hello {value}<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+}
+
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">App</span> /&gt;</span>, document.getElementById('app'))</span>
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-29">
+    <section class="slide-content"><h2 id="jsx">JSX</h2>
+<ul>
+<li>is not html, it is a way to write functions/components</li>
+</ul>
+<pre><code>&lt;App /&gt;
+</code></pre><pre><code>const App = React.createElement(&#39;div&#39;, null, &#39;Hello World&#39;)
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-30">
+    <section class="slide-content"><h2 id="jsx">JSX</h2>
+<blockquote>
+<p>no <code>class</code> - but <code>className</code> <div className="card">I am a card</div>
+no <code>for</code> - but &#39;htmlFor` eg. <label htmlFor="foo">Foo</label></p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-31">
+    <section class="slide-content"><h2 id="jsx">JSX</h2>
+<blockquote>
+<p>props - you can pass data to your components using props or <code>attributes</code></p>
+</blockquote>
+<ul>
+<li>Data Down</li>
+<li>Actions Up</li>
+</ul>
+<pre><code>&lt;Counter value={0} inc={inc} dec={dec} /&gt;
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-32">
+    <section class="slide-content"><h2 id="component-state">Component State</h2>
+<blockquote>
+<p>Every React Component can contain state</p>
+</blockquote>
+<pre><code class="lang-js"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Counter</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">React</span>.<span class="hljs-title">Component</span> </span>{
+  state = { <span class="hljs-attr">count</span>: <span class="hljs-number">0</span> }
+  inc = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState({ <span class="hljs-attr">count</span>: <span class="hljs-keyword">this</span>.state.count + <span class="hljs-number">1</span> })
+  dec = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> <span class="hljs-keyword">this</span>.setState({ <span class="hljs-attr">count</span>: <span class="hljs-keyword">this</span>.state.count - <span class="hljs-number">1</span> })
+
+  render() {
+    <span class="hljs-keyword">return</span> (
+      <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Count: {this.count}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{this.inc}</span>&gt;</span>Inc<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+        <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">onClick</span>=<span class="hljs-string">{this.dec}</span>&gt;</span>Dec<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+      <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></span>
+    )
+  }
+}
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-33">
+    <section class="slide-content"><h2 id="props-vs-state">Props vs State</h2>
+<p>Props are passed down to a component, state resides in a component</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-34">
+    <section class="slide-content"><h3 id="presentation-components">Presentation Components</h3>
+<blockquote>
+<p>Functional Stateless Components</p>
+</blockquote>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-35">
+    <section class="slide-content"><h3 id="lifecycle-methods">Lifecycle Methods</h3>
+<blockquote>
+<p>We will not use any lifecycle methods today</p>
+</blockquote>
+<p>Lifecycle methods are hooks you can add to your component to
+perform certain functions during an event of your components rendering lifecycle.</p>
+<p><a href="https://reactjs.org/docs/react-component.html#the-component-lifecycle">https://reactjs.org/docs/react-component.html#the-component-lifecycle</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-36">
+    <section class="slide-content"><h3 id="exercise">Exercise</h3>
+<p>Create a React Hello World Component</p>
+<ul>
+<li>mkdir in <code>src</code> called components</li>
+<li>create new file in components called hello</li>
+<li>import React</li>
+<li>export a component that accepts a value as a prop</li>
+<li>then displays hello plus the value</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-37">
+    <section class="slide-content"><h3 id="exercise">Exercise</h3>
+<p>Create a React Counter Component</p>
+<p>Using state, create a counter component that can increment and decrement a count</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-38">
+    <section class="slide-content"><h3 id="exercise">Exercise</h3>
+<p>Create a guess a number game with react</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-39">
+    <section class="slide-content"><h3 id="review-exercises">Review Exercises</h3>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-40">
+    <section class="slide-content"><h1 id="material-ui">Material UI</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-41">
+    <section class="slide-content"><h3 id="setup">Setup</h3>
+<ul>
+<li>Install material-ui</li>
+</ul>
+<pre><code>npm install @material-ui/core
+</code></pre><p>Add the following to the head in index.html</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css?family=Roboto:300,400,500&quot;&gt;
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-42">
+    <section class="slide-content"><h3 id="icons">Icons</h3>
+<pre><code>npm install @material-ui/icons
+</code></pre><p>Add the following to the head in index.html</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/icon?family=Material+Icons&quot;&gt;
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-43">
+    <section class="slide-content"><h3 id="material-design">Material Design</h3>
+<p>Material UI is based on Material Design:</p>
+<p><a href="https://material.io/design/">https://material.io/design/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-44">
+    <section class="slide-content"><h1 id="components">Components</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-45">
+    <section class="slide-content"><h3 id="common-components">Common Components</h3>
+<ul>
+<li>AppBar</li>
+<li>Card</li>
+<li>List</li>
+<li>Drawer</li>
+<li>Avatar</li>
+<li>etc</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-46">
+    <section class="slide-content"><h3 id="appbar">AppBar</h3>
+<p><a href="https://material-ui.com/demos/app-bar/">https://material-ui.com/demos/app-bar/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-47">
+    <section class="slide-content"><h3 id="card">Card</h3>
+<p><a href="https://material-ui.com/demos/cards/">https://material-ui.com/demos/cards/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-48">
+    <section class="slide-content"><h3 id="list">List</h3>
+<p><a href="https://material-ui.com/demos/lists/">https://material-ui.com/demos/lists/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-49">
+    <section class="slide-content"><h3 id="drawer">Drawer</h3>
+<p><a href="https://material-ui.com/demos/drawers/">https://material-ui.com/demos/drawers/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-50">
+    <section class="slide-content"><h3 id="avatar">Avatar</h3>
+<p><a href="https://material-ui.com/demos/avatars/">https://material-ui.com/demos/avatars/</a></p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-51">
+    <section class="slide-content"><h1 id="style">Style</h1>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-52">
+    <section class="slide-content"><h3 id="style">Style</h3>
+<ul>
+<li>themes</li>
+<li>withStyle</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-53">
+    <section class="slide-content"><h3 id="themes">Themes</h3>
+<pre><code>import { MuiThemeProvider } from &#39;@material-ui/core/styles&#39;
+import theme from &#39;./theme&#39;
+
+&lt;MuiThemeProvider theme={theme}&gt;
+  &lt;App /&gt;
+&lt;/MuiThemeProvider&gt;
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-54">
+    <section class="slide-content"><h2 id="lab">Lab</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-55">
+    <section class="slide-content"><ul>
+<li>Theme</li>
+<li>AppBar</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-56">
+    <section class="slide-content"><h2 id="exercise">Exercise</h2>
+<p>Create a list component called articles:</p>
+<pre><code class="lang-js"><span class="hljs-keyword">const</span> sample = [
+  {
+    <span class="hljs-attr">title</span>: <span class="hljs-string">'An Awesome Article'</span>,
+    <span class="hljs-attr">url</span>: <span class="hljs-string">'A link'</span>,
+    <span class="hljs-attr">_id</span>: <span class="hljs-string">'uniqueidentifier'</span>,
+    <span class="hljs-attr">imageUrl</span>: <span class="hljs-string">'https://placehold.it/320/320'</span>
+  }
+]
+</code></pre>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-57">
+    <section class="slide-content"><h2 id="exercise">Exercise</h2>
+<p>Create an About Card Component</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-58">
+    <section class="slide-content"><h2 id="exercise">Exercise</h2>
+<p>Create a List Articles Component</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-59">
+    <section class="slide-content"><h2 id="exercise">Exercise</h2>
+<p>Create a Show Article Component</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-60">
+    <section class="slide-content"><h2 id="exercise">Exercise</h2>
+<p>Create a Custom List Component with checkboxes</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-61">
+    <section class="slide-content"><h2 id="common-react-patterns">Common React Patterns</h2>
+<ul>
+<li>Presentation/Container</li>
+<li>Render Props</li>
+<li>Higher Order Components</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-62">
+    <section class="slide-content"><h2 id="lunch">Lunch</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-63">
+    <section class="slide-content"><h2 id="redux-and-redux-bundler">Redux and Redux Bundler</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-64">
+    <section class="slide-content"><h2 id="what-is-redux-">What is redux?</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-65">
+    <section class="slide-content"><h3 id="tour-of-redux">Tour of Redux</h3>
+<ul>
+<li>Store</li>
+<li>Dispatch</li>
+<li>Subscribe</li>
+<li>Actions</li>
+<li>Reducers</li>
+<li>ActionCreators</li>
+<li>Selectors</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-66">
+    <section class="slide-content"><h2 id="what-is-redux-bundler-">What is redux bundler?</h2>
+<p>A module that takes some best practices and puts them in a organized structure.</p>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-67">
+    <section class="slide-content"><ul>
+<li>composeBundles</li>
+<li>Provider</li>
+<li>connect</li>
+<li>debugging</li>
+<li>routing</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-68">
+    <section class="slide-content"><h3 id="setup">Setup</h3>
+<pre><code>npm install redux-bundler redux-bundler-react
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-69">
+    <section class="slide-content"><h3 id="create-our-redux-store">Create our Redux Store</h3>
+<ul>
+<li>create a bundles folder</li>
+<li>create an index.js file</li>
+</ul>
+<pre><code>import { composeBundles } from &#39;redux-bundler&#39;
+export default composeBundles()
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-70">
+    <section class="slide-content"><h3 id="add-store-to-react">Add Store to React</h3>
+<pre><code>import { Provider } from &#39;redux-bundler-react&#39;
+import getStore from &#39;./bundles&#39;
+
+&lt;Provider store={getStore()}&gt;
+  &lt;App /&gt;
+&lt;/Provider&gt;
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-71">
+    <section class="slide-content"><h3 id="create-a-bundle">Create a bundle</h3>
+<pre><code>export default {
+  name: &#39;app&#39;,
+  getReducer: (state, action) =&gt; {
+    return { title: &#39;Newsy&#39; }
+  },
+  selectTitle: (state) =&gt; state.app.title
+}
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-72">
+    <section class="slide-content"><h3 id="lab">Lab</h3>
+<ul>
+<li>App Bundle</li>
+<li>Routes Bundle</li>
+<li>Sources Bundle</li>
+<li>Articles Bundle</li>
+<li>Checked Sources Bundle</li>
+<li>Caching Bundle</li>
+</ul>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-73">
+    <section class="slide-content"><h2 id="deploying">Deploying</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-74">
+    <section class="slide-content"><h1 id="https-zeit-co-"><a href="https://zeit.co/">https://zeit.co/</a></h1>
+<h2 id="instant-global-deployments">Instant Global Deployments</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-75">
+    <section class="slide-content"><h3 id="setup">Setup</h3>
+<pre><code>npm install now -g
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-76">
+    <section class="slide-content"><h2 id="service-workers">Service Workers</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-77">
+    <section class="slide-content"><h2 id="intro">Intro</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-78">
+    <section class="slide-content"><h3 id="workbox">Workbox</h3>
+<pre><code>npm install workbox-cli
+</code></pre></section>
+  </div>
+  <div class="slide hidden" id="slide-79">
+    <section class="slide-content"><h2 id="lab">Lab</h2>
+</section>
+  </div>
+  <div class="slide hidden" id="slide-80">
+    <section class="slide-content"></section>
+  </div>
+  <div class="slide hidden author-slide" id="slide-81">
+    <section class="slide-content"><div class="author">
+  <h1 class="name">Tom Wilson</h1>
+    <h3 class="twitter">
+      <a href="http://twitter.com/@twilson63">@twilson63</a>
+    </h3>
+    <h3 class="url">
+      <a href="https://twilson63.xyz">https://twilson63.xyz</a>
+    </h3>
+</div>
+</section>
+  </div>
+
+  <div class="controls">
+    <div class="arrow prev"></div>
+    <div class="arrow next"></div>
+  </div>
+
+
+  <script type="text/javascript">
+    /**
+ * Returns the current page number of the presentation.
+ */
+function currentPosition() {
+  return parseInt(document.querySelector('.slide:not(.hidden)').id.slice(6));
+}
+
+
+/**
+ * Navigates forward n pages
+ * If n is negative, we will navigate in reverse
+ */
+function navigate(n) {
+  var position = currentPosition();
+  var numSlides = document.getElementsByClassName('slide').length;
+
+  /* Positions are 1-indexed, so we need to add and subtract 1 */
+  var nextPosition = (position - 1 + n) % numSlides + 1;
+
+  /* Normalize nextPosition in-case of a negative modulo result */
+  nextPosition = (nextPosition - 1 + numSlides) % numSlides + 1;
+
+  document.getElementById('slide-' + position).classList.add('hidden');
+  document.getElementById('slide-' + nextPosition).classList.remove('hidden');
+
+  updateProgress();
+  updateURL();
+  updateTabIndex();
+}
+
+
+/**
+ * Updates the current URL to include a hashtag of the current page number.
+ */
+function updateURL() {
+  try {
+    window.history.replaceState({} , null, '#' + currentPosition());
+  } catch (e) {
+    window.location.hash = currentPosition();
+  }
+}
+
+
+/**
+ * Sets the progress indicator.
+ */
+function updateProgress() {
+  var progressBar = document.querySelector('.progress-bar');
+
+  if (progressBar !== null) {
+    var numSlides = document.getElementsByClassName('slide').length;
+    var position = currentPosition() - 1;
+    var percent = (numSlides === 1) ? 100 : 100 * position / (numSlides - 1);
+    progressBar.style.width = percent.toString() + '%';
+  }
+}
+
+
+/**
+ * Removes tabindex property from all links on the current slide, sets
+ * tabindex = -1 for all links on other slides. Prevents slides from appearing
+ * out of control.
+ */
+function updateTabIndex() {
+  var allLinks = document.querySelectorAll('.slide a');
+  var position = currentPosition();
+  var currentPageLinks = document.getElementById('slide-' + position).querySelectorAll('a');
+  var i;
+
+  for (i = 0; i < allLinks.length; i++) {
+    allLinks[i].setAttribute('tabindex', -1);
+  }
+
+  for (i = 0; i < currentPageLinks.length; i++) {
+    currentPageLinks[i].removeAttribute('tabindex');
+  }
+}
+
+/**
+ * Determines whether or not we are currently in full screen mode
+ */
+function isFullScreen() {
+  return document.fullscreenElement ||
+         document.mozFullScreenElement ||
+         document.webkitFullscreenElement ||
+         document.msFullscreenElement;
+}
+
+/**
+ * Toggle fullScreen mode on document element.
+ * Works on chrome (>= 15), firefox (>= 9), ie (>= 11), opera(>= 12.1), safari (>= 5).
+ */
+function toggleFullScreen() {
+  /* Convenient renames */
+  var docElem = document.documentElement;
+  var doc = document;
+
+  docElem.requestFullscreen =
+      docElem.requestFullscreen ||
+      docElem.msRequestFullscreen ||
+      docElem.mozRequestFullScreen ||
+      docElem.webkitRequestFullscreen.bind(docElem, Element.ALLOW_KEYBOARD_INPUT);
+
+  doc.exitFullscreen =
+      doc.exitFullscreen ||
+      doc.msExitFullscreen ||
+      doc.mozCancelFullScreen ||
+      doc.webkitExitFullscreen;
+
+  isFullScreen() ? doc.exitFullscreen() : docElem.requestFullscreen();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Update the tabindex to prevent weird slide transitioning
+  updateTabIndex();
+
+  // If the location hash specifies a page number, go to it.
+  var page = window.location.hash.slice(1);
+  if (page) {
+    navigate(parseInt(page) - 1);
+  }
+
+  document.onkeydown = function (e) {
+    var kc = e.keyCode;
+
+    // left, down, H, J, backspace, PgUp - BACK
+    // up, right, K, L, space, PgDn - FORWARD
+    // enter - FULLSCREEN
+    if (kc === 37 || kc === 40 || kc === 8 || kc === 72 || kc === 74 || kc === 33) {
+      navigate(-1);
+    } else if (kc === 38 || kc === 39 || kc === 32 || kc === 75 || kc === 76 || kc === 34) {
+      navigate(1);
+    } else if (kc === 13) {
+      toggleFullScreen();
+    }
+  };
+
+  if (document.querySelector('.next') && document.querySelector('.prev')) {
+    document.querySelector('.next').onclick = function (e) {
+      e.preventDefault();
+      navigate(1);
+    };
+
+    document.querySelector('.prev').onclick = function (e) {
+      e.preventDefault();
+      navigate(-1);
+    };
+  }
+});
+
+
+  </script>
+</body>
+</html>
