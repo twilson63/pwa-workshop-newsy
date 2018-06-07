@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'redux-bundler-react'
 
 import Drawer from '@material-ui/core/Drawer'
 import Typography from '@material-ui/core/Typography'
@@ -65,11 +64,4 @@ const styles = {
   }
 }
 
-export default withStyles(styles)(
-  connect(
-    'selectDrawer',
-    'doToggleDrawer',
-    'doUpdateUrl',
-    AppDrawer
-  )
-)
+export default withStyles(styles)(AppDrawer)

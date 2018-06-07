@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'redux-bundler-react'
 
 import { withStyles } from '@material-ui/core/styles'
 
@@ -41,10 +40,4 @@ const styles = theme => ({
   }
 })
 
-export default withStyles(styles)(
-  connect(
-    'doToggleDrawer',
-    'doFetchArticles',
-    Header
-  )
-)
+export default withStyles(styles)(Header)

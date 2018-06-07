@@ -21,7 +21,7 @@ const bundle = createAsyncResourceBundle({
       sources = ['abc-news']
     }
     return fetch(
-      `https://newsapi.org/v2/top-headlines?country=us&apiKey=${
+      `https://newsapi.org/v2/top-headlines?sources=${sources}&apiKey=${
         process.env.NEWS_API
       }`
     )

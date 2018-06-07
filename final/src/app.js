@@ -3,8 +3,8 @@ import { connect } from 'redux-bundler-react'
 
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-import Header from './components/header'
-import Drawer from './components/drawer'
+import Header from './containers/header'
+import Drawer from './containers/drawer'
 
 /**
  * Newsy App Component
