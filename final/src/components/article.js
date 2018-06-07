@@ -1,6 +1,4 @@
 import React from 'react'
-import { connect } from 'redux-bundler-react'
-
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActions from '@material-ui/core/CardActions'
@@ -57,10 +55,4 @@ const styles = theme => ({
   }
 })
 
-export default withStyles(styles)(
-  connect(
-    'selectArticle',
-    'doUpdateUrl',
-    Article
-  )
-)
+export default withStyles(styles)(Article)

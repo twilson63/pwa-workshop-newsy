@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'redux-bundler-react'
 
 import { withStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -45,10 +44,4 @@ const styles = theme => ({
   }
 })
 
-export default withStyles(styles)(
-  connect(
-    'selectCheckifySources',
-    'doUpdateUrl',
-    Custom
-  )
-)
+export default withStyles(styles)(Custom)

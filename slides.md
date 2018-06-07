@@ -1149,52 +1149,6 @@ export default {
 
 --
 
-## Deploying
-
---
-
-# https://zeit.co/
-
-## Instant Global Deployments
-
---
-
-> serve.json
-
-```
-{
-  "public": "dist",
-  "cleanUrls": false,
-  "rewrites": [
-    { "source": "/", "destination": "/index.html" },
-    { "source": "/index.html", "destination": "/index.html" },
-    { "source": "/custom", "destination": "/index.html" },
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/articles/**", "destination": "/index.html" }
-  ]
-}
-```
-
---
-
-> package.json
-
-```
-"now": {
-  "alias": "newsy.io"
-}
-```
-
---
-
-### Setup
-
-```
-npm install now -g
-```
-
---
-
 > src/utils/cache.js
 
 ```js
@@ -1251,6 +1205,81 @@ export default composeBundles(
 
 --
 
+## Deploying
+
+--
+
+# https://zeit.co/
+
+## Instant Global Deployments
+
+--
+
+```
+npm install now -g
+```
+
+--
+
+> .gitignore
+
+```
+.cache
+dist
+node_modules
+```
+
+--
+
+> package.json
+
+```
+json -I -f package.json -e 'this.scripts.start = "serve"'
+json -I -f package.json -e 'this.scripts.build = "parcel build public/index.html"'
+```
+
+--
+
+> serve.json
+
+```
+{
+  "public": "dist",
+  "cleanUrls": false,
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/index.html", "destination": "/index.html" },
+    { "source": "/custom", "destination": "/index.html" },
+    { "source": "/about", "destination": "/index.html" },
+    { "source": "/articles/**", "destination": "/index.html" }
+  ]
+}
+```
+
+--
+
+```
+yarn add parcel-plugin-bundle-visualiser
+yarn build
+```
+
+--
+
+```
+open report.html
+```
+
+--
+
+### WebManifest
+
+use https://apetools.webprofusion.com/ to generate your manifest file and icons
+
+* copy them into your public directory.
+* rename manifest.json to site.manifest.
+
+--
+
 ## Service Workers
 
 --
@@ -1262,6 +1291,24 @@ https://developers.google.com/web/tools/workbox/
 `yarn add workbox-cli --dev`
 
 --
+
+`json -I -f package.json -e 'this.scripts.workbox = "workbox wizard"'`
+
+--
+
+```
+yarn workbox
+```
+
+Answer the wizards questions:
+
+* dist is your destination folder
+* check all files you want cached
+* etc
+
+--
+
+> Add you service worker script to the index.js
 
 > public/index.html
 
@@ -1282,6 +1329,15 @@ https://developers.google.com/web/tools/workbox/
 
 --
 
+> Auto Generate your Service Worker js file
+
+```
+json -I -f package.json  \
+-e 'this.scripts.build = "parcel build public/index.html && generateSW"'
+```
+
+--
+
 ## Intro
 
 --
@@ -1294,8 +1350,8 @@ npm install workbox-cli
 
 --
 
-## Lab
+### connect newsapi
 
---
-
-https://join.slack.com/t/jrs-training/shared_invite/enQtMzc2NTQ5NDI3MzYzLTMyODQwNmQyNDc4YzgxYzlkYWFhMjY5ZjZiMzcxNTg3MDgwYWJkOGM3MWFjNWZhMmJjMzI4ZTg4NjJhOGU1MDg
+* create `.env`
+* add your api key NEWS_API=XXXXX
+*

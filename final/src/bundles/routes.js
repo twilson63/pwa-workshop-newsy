@@ -1,9 +1,9 @@
 import { createRouteBundle } from 'redux-bundler'
 
-import Articles from '../components/articles'
-import Show from '../components/article'
-import About from '../components/about'
-import Custom from '../components/custom'
+import Articles from '../containers/articles'
+import Show from '../containers/article'
+import About from '../containers/about'
+import Custom from '../containers/custom'
 import Notfound from '../pages/notfound'
 
 export default createRouteBundle({
